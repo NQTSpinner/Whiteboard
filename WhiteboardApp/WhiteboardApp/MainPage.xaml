@@ -7,7 +7,59 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <SplitView Background="White" IsPaneOpen="False">
-        <InkCanvas x:Name="InkCanvas"/>
-    </SplitView>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <SplitView x:Name="SplitView" DisplayMode="Overlay" OpenPaneLength="150" PanePlacement="Left" IsPaneOpen="True">
+            <SplitView.Pane>
+                <StackPanel Orientation="Vertical" Background="Gray">
+                    <StackPanel Orientation="Horizontal">
+                        <Image x:Name="UserDP" Source="Images/user.png" Height="50" Width="50"/>
+                        <!--leave this icon outside so that when you tap it it opens up the window but stays on top (aka the pane moves out from behind it)-->
+                        <TextBlock x:Name="UserName" Text="Carmen" VerticalAlignment="Bottom" Margin="5,0,0,8"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="5,0,0,0">
+                        <TextBlock x:Name="FriendsButton" Text="Friends" Margin="5,5,0,0"/>
+                        <TextBlock x:Name="WhiteboardsButton" Text="My Whiteboards" Margin="5,5,0,0"/>
+                        <TextBlock x:Name="SignOutButton" Text="Sign Out" Margin="5,5,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </SplitView.Pane>
+
+
+            <Grid>
+                <StackPanel HorizontalAlignment="Left" Width="50" Orientation="Vertical">
+                    <Image x:Name="OpenMenuButton" Source="Images/user.png" Height="50" Tapped="OpenMenuButton_Tapped" />
+                    <Button x:Name="ColourButton" Height="50" Width="50" Click="OpenColourButton_Tapped" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/red.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Image x:Name="SizeButton" Source="Images/brush.png" Height="50" />
+                    <Image x:Name="SquareButton" Source="Images/square.png" Height="50" />
+                    <Image x:Name="CircleButton" Source="Images/circle.png" Height="50" />
+                    <Image x:Name="EraserButton" Source="Images/eraser.png" Height="50" />
+                    <Image x:Name="TextButton" Source="Images/text.png" Height="50" />
+                </StackPanel>
+                <StackPanel x:Name="ColourPanel" Margin="50,50,0,0" Width="50" HorizontalAlignment="Left" Visibility="Collapsed">
+                    <Image x:Name="Red" Source="Images/red.png"/>
+                    <Image x:Name="Blue" Source="Images/blue.png"/>
+                    <Image x:Name="Green" Source="Images/green.png" />
+                    <Image x:Name="Purple" Source="Images/purple.png"/>
+                    <Image x:Name="Yellow" Source="Images/yellow.png"/>
+                    <Image x:Name="Orange" Source="Images/orange.png" />
+                    <Image x:Name="Black" Source="Images/black.png" />
+                </StackPanel>
+
+                <Grid x:Name="ParticipantsGrid" Margin="1050,7500,0,0" Height="50" Width="100" Background="Gray">
+                    <TextBlock x:Name="ParticipantsTab" Visibility="Visible" Width="100" Height="50" VerticalAlignment="Bottom" Text="7 Participants" TextAlignment="Center" Margin="0,5,0,0"/>
+                    <!--//when blick on the textblock or grid, collapse textblock and make listbox visible, and change grid margin and height to match listbox height-->
+                    <ListBox x:Name="ParticipantsList" Visibility="Collapsed" Width="100" VerticalAlignment="Bottom">
+                        <ListBoxItem Content="HELLO"/>
+                        <!--//bind listbox items-->
+                    </ListBox>
+                </Grid>
+            </Grid>
+            <!--<InkCanvas x:Name="InkCanvas"/>-->
+        </SplitView>
+    </Grid>
+    
 </Page>

@@ -26,5 +26,22 @@ namespace WhiteboardApp
         {
             this.InitializeComponent();
         }
+
+        private void OpenMenuButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            this.SplitView.IsPaneOpen = true;
+        }
+
+        private void OpenColourButton_Tapped(object sender, RoutedEventArgs e)
+        {
+            if (this.ColourPanel.Visibility.Equals(Visibility.Visible))
+            {
+                this.ColourPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.ColourPanel.Visibility = Visibility.Visible;
+            }
+        }
     }
 }
