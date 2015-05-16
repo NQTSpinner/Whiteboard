@@ -33,10 +33,32 @@ namespace WhiteboardApp
             //dispatchTimer.Tick += Update_Canvas;
             //dispatchTimer.Start();
 
-            //InkCanvas.InkPresenter.StrokesCollected += Save_Strokes;
+            InkCanvas.InkPresenter.StrokesCollected += Save_Strokes;
+            InkCanvas.InkPresenter.StrokesErased += Erase_Strokes;
+
         }
 
-        private async void Save_Strokes(object sender, RoutedEventArgs args)
+        private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
+        {
+            var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
+            var openedFile = await file.AsTask();
+            if (openedFile != null)
+            {
+                try
+                {
+                    using (IRandomAccessStream stream = await openedFile.OpenAsync(FileAccessMode.ReadWrite))
+                    {
+                        await InkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+        }
+
+        private async void Save_Strokes(InkPresenter sender, InkStrokesCollectedEventArgs args)
         {
             var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
             var openedFile = await file.AsTask();

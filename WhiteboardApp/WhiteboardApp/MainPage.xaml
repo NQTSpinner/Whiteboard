@@ -16,7 +16,6 @@
                 <Button Content="Small" Click="Small_Button_Click"/>
                 <Button Content="Medium" Click="Medium_Button_Click"/>
                 <Button Content="Large" Click="Large_Button_Click"/>
-                <Button Content="Save" Click="Save_Strokes" />
                 <Button Content="Load" Click="Load_Strokes" />
             </StackPanel>
         </SplitView.Pane>
