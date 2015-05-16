@@ -27,6 +27,7 @@
 
 
             <Grid>
+                <InkCanvas x:Name="InkCanvas"/>
                 <StackPanel HorizontalAlignment="Left" Width="50" Orientation="Vertical">
                     <Image x:Name="OpenMenuButton" Source="Images/user.png" Height="50" Tapped="OpenMenuButton_Tapped" />
                     <Button x:Name="ColourButton" Height="50" Width="50" Click="OpenColourButton_Tapped" >
@@ -58,7 +59,7 @@
                         <!--//bind listbox items-->
                     </ListBox>
                 </Grid>
-                <InkCanvas x:Name="InkCanvas"/>
+                
             </Grid>
         </SplitView>
     </Grid>
