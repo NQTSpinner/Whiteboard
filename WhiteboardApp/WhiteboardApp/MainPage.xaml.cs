@@ -200,7 +200,7 @@ namespace WhiteboardApp
 
         private void OpenColourButton_Tapped(object sender, RoutedEventArgs e)
         {
-            //CloseOtherPanels("Colour");
+            CloseOtherPanels("Colour");
             if (this.ColourPanel.Visibility.Equals(Visibility.Visible))
             {
                 this.ColourPanel.Visibility = Visibility.Collapsed;
@@ -213,22 +213,22 @@ namespace WhiteboardApp
 
         private void SizeButton_Click(object sender, RoutedEventArgs e)
         {
-        //    CloseOtherPanels("Size");
-        //    if (this.SizePanel.Visibility.Equals(Visibility.Visible))
-        //    {
-        //        this.SizePanel.Visibility = Visibility.Collapsed;
-        //    }
-        //    else
-        //    {
-        //        this.SizePanel.Visibility = Visibility.Visible;
-        //    }
+            CloseOtherPanels("Size");
+            if (this.SizePanel.Visibility.Equals(Visibility.Visible))
+            {
+                this.SizePanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.SizePanel.Visibility = Visibility.Visible;
+            }
         }
 
-        //private void CloseOtherPanels(string currentPanel)
-        //{
-        //    if (currentPanel != "Size") this.SizePanel.Visibility = Visibility.Collapsed;
-        //    if (currentPanel != "Colour") this.ColourPanel.Visibility = Visibility.Collapsed;
-        //}       
+        private void CloseOtherPanels(string currentPanel)
+        {
+            if (currentPanel != "Size") this.SizePanel.Visibility = Visibility.Collapsed;
+            if (currentPanel != "Colour") this.ColourPanel.Visibility = Visibility.Collapsed;
+        }
 
         private void SquareButton_Click(object sender, RoutedEventArgs e)
         {

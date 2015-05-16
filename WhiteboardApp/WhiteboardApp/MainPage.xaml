@@ -98,7 +98,24 @@
                         </Button.Background>
                     </Button>
                 </StackPanel>
-
+                <StackPanel x:Name="SizePanel" Margin="50,100,0,0" Width="50" HorizontalAlignment="Left" Visibility="Collapsed">
+                    <Button x:Name="ThickButton" Height="50" Width="50" Click="Thick_Stroke_Button_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/largebrush.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="MedButton" Height="50" Width="50" Click="Medium_Stroke_Button_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/medbrush.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="ThinButton" Height="50" Width="50" Click="Thin_Stroke_Button_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/smallbrush.png"/>
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
+                
                 <Grid x:Name="ParticipantsGrid" Margin="1050,7500,0,0" Height="50" Width="100" Background="Gray">
                     <TextBlock x:Name="ParticipantsTab" Visibility="Visible" Width="100" Height="50" VerticalAlignment="Bottom" Text="7 Participants" TextAlignment="Center" Margin="0,5,0,0"/>
                     <!--//when blick on the textblock or grid, collapse textblock and make listbox visible, and change grid margin and height to match listbox height-->
