@@ -7,7 +7,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <SplitView Background="White" IsPaneOpen="False">
+    <SplitView Background="White" DisplayMode="CompactInline" IsPaneOpen="True" CompactPaneLength="100" OpenPaneLength="200">
+        <SplitView.Pane>
+            <StackPanel>
+                <Button Content="Blue" Click="Blue_Button_Click"/>
+                <Button Content="Green" Click="Green_Button_Click"/>
+                <Button Content="Red" Click="Red_Button_Click"/>
+                <Button Content="Small" Click="Small_Button_Click"/>
+                <Button Content="Medium" Click="Medium_Button_Click"/>
+                <Button Content="Large" Click="Large_Button_Click"/>
+                <Button Content="Save" Click="Save_Strokes" />
+                <Button Content="Load" Click="Load_Strokes" />
+            </StackPanel>
+        </SplitView.Pane>
         <InkCanvas x:Name="InkCanvas"/>
     </SplitView>
 </Page>
