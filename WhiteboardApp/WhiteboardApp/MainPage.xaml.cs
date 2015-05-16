@@ -119,33 +119,33 @@ namespace WhiteboardApp
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
         }
 
-        private void Small_Button_Click(object sender, RoutedEventArgs e)
+        private void Thin_Stroke_Button_Click(object sender, RoutedEventArgs e)
         {
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Size = new Size(5, 5);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
         }
 
-        private void Medium_Button_Click(object sender, RoutedEventArgs e)
+        private void Medium_Stroke_Button_Click(object sender, RoutedEventArgs e)
         {
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Size = new Size(10, 10);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
         }
 
-        private void Large_Button_Click(object sender, RoutedEventArgs e)
+        private void Thick_Stroke_Button_Click(object sender, RoutedEventArgs e)
         {
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Size = new Size(20, 20);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
         }
 
-        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        private void EraseButton_Checked(object sender, RoutedEventArgs e)
         {
             InkCanvas.InkPresenter.InputProcessingConfiguration.Mode = InkInputProcessingMode.Erasing;
         }
 
-        private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        private void EraseButton_Unchecked(object sender, RoutedEventArgs e)
         {
             InkCanvas.InkPresenter.InputProcessingConfiguration.Mode = InkInputProcessingMode.Inking;
         }
