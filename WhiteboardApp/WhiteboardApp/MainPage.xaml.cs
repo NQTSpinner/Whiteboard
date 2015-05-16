@@ -35,7 +35,7 @@ namespace WhiteboardApp
 
             InkCanvas.InkPresenter.StrokesCollected += Save_Strokes;
             InkCanvas.InkPresenter.StrokesErased += Erase_Strokes;
-
+            InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Touch | Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
 
         private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
