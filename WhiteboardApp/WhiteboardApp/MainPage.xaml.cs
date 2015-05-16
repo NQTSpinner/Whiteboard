@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -98,25 +99,67 @@ namespace WhiteboardApp
             }
         }
 
-        private void Blue_Button_Click(object sender, RoutedEventArgs e)
+        private void BlueButton_Click(object sender, RoutedEventArgs e)
         {
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 0, 0, 255);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
+            SetColourIcon("Images/blue.png");
         }
 
-        private void Green_Button_Click(object sender, RoutedEventArgs e)
+        private void GreenButton_Click(object sender, RoutedEventArgs e)
         {
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 0, 255, 0);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
+            SetColourIcon("Images/green.png");
         }
 
-        private void Red_Button_Click(object sender, RoutedEventArgs e)
+        private void RedButton_Click(object sender, RoutedEventArgs e)
         {
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 255, 0, 0);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
+            SetColourIcon("Images/red.png");
+        }
+
+        private void PurpleButton_Click(object sender, RoutedEventArgs e)
+        {
+            InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
+            drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 138, 43, 236); // TO DOOO!!!
+            InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
+            SetColourIcon("Images/purple.png");
+        }
+
+        private void OrangeButton_Click(object sender, RoutedEventArgs e)
+        {
+            InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
+            drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 255, 140, 0); // TO DOOO!!!!
+            InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
+            SetColourIcon("Images/orange.png");
+        }
+
+        private void YellowButton_Click(object sender, RoutedEventArgs e)
+        {
+            InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
+            drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 255, 255, 0); //TO DO !!!!
+            InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
+            SetColourIcon("Images/yellow.png");
+        }
+
+        private void BlackButton_Click(object sender, RoutedEventArgs e)
+        {
+            InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
+            drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 0, 0, 0);
+            InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
+            SetColourIcon("Images/black.png");
+        }
+
+        private void SetColourIcon(string path)
+        {
+            var brush = new ImageBrush();
+            brush.ImageSource = new BitmapImage(new Uri("ms-appx:/" + path));
+            this.ColourButton.Background = brush;
         }
 
         private void Thin_Stroke_Button_Click(object sender, RoutedEventArgs e)
@@ -140,12 +183,12 @@ namespace WhiteboardApp
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
         }
 
-        private void EraseButton_Checked(object sender, RoutedEventArgs e)
+        private void EraserButton_Checked(object sender, RoutedEventArgs e)
         {
             InkCanvas.InkPresenter.InputProcessingConfiguration.Mode = InkInputProcessingMode.Erasing;
         }
 
-        private void EraseButton_Unchecked(object sender, RoutedEventArgs e)
+        private void EraserButton_Unchecked(object sender, RoutedEventArgs e)
         {
             InkCanvas.InkPresenter.InputProcessingConfiguration.Mode = InkInputProcessingMode.Inking;
         }
@@ -157,6 +200,7 @@ namespace WhiteboardApp
 
         private void OpenColourButton_Tapped(object sender, RoutedEventArgs e)
         {
+            //CloseOtherPanels("Colour");
             if (this.ColourPanel.Visibility.Equals(Visibility.Visible))
             {
                 this.ColourPanel.Visibility = Visibility.Collapsed;
@@ -165,6 +209,40 @@ namespace WhiteboardApp
             {
                 this.ColourPanel.Visibility = Visibility.Visible;
             }
+        }
+
+        private void SizeButton_Click(object sender, RoutedEventArgs e)
+        {
+        //    CloseOtherPanels("Size");
+        //    if (this.SizePanel.Visibility.Equals(Visibility.Visible))
+        //    {
+        //        this.SizePanel.Visibility = Visibility.Collapsed;
+        //    }
+        //    else
+        //    {
+        //        this.SizePanel.Visibility = Visibility.Visible;
+        //    }
+        }
+
+        //private void CloseOtherPanels(string currentPanel)
+        //{
+        //    if (currentPanel != "Size") this.SizePanel.Visibility = Visibility.Collapsed;
+        //    if (currentPanel != "Colour") this.ColourPanel.Visibility = Visibility.Collapsed;
+        //}       
+
+        private void SquareButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CircleButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

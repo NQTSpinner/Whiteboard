@@ -35,20 +35,68 @@
                             <ImageBrush ImageSource="Images/red.png"/>
                         </Button.Background>
                     </Button>
-                    <Image x:Name="SizeButton" Source="Images/brush.png" Height="50" />
-                    <Image x:Name="SquareButton" Source="Images/square.png" Height="50" />
-                    <Image x:Name="CircleButton" Source="Images/circle.png" Height="50" />
-                    <Image x:Name="EraserButton" Source="Images/eraser.png" Height="50" />
-                    <Image x:Name="TextButton" Source="Images/text.png" Height="50" />
+                    <Button x:Name="SizeButton" Height="50" Width="50" Click="SizeButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/brush.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="SquareButton" Height="50" Width="50" Click="SquareButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/square.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="CircleButton" Height="50" Width="50" Click="CircleButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/circle.png"/>
+                        </Button.Background>
+                    </Button>
+                    <ToggleButton x:Name="EraserButton" Height="50" Width="50" Checked="EraserButton_Checked" Unchecked="EraserButton_Unchecked">
+                        <ToggleButton.Background>
+                            <ImageBrush ImageSource="Images/eraser.png"/>
+                        </ToggleButton.Background>
+                    </ToggleButton>
+                    <Button x:Name="TextButton" Height="50" Width="50" Click="TextButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/text.png"/>
+                        </Button.Background>
+                    </Button>
                 </StackPanel>
                 <StackPanel x:Name="ColourPanel" Margin="50,50,0,0" Width="50" HorizontalAlignment="Left" Visibility="Collapsed">
-                    <Image x:Name="Red" Source="Images/red.png"/>
-                    <Image x:Name="Blue" Source="Images/blue.png"/>
-                    <Image x:Name="Green" Source="Images/green.png" />
-                    <Image x:Name="Purple" Source="Images/purple.png"/>
-                    <Image x:Name="Yellow" Source="Images/yellow.png"/>
-                    <Image x:Name="Orange" Source="Images/orange.png" />
-                    <Image x:Name="Black" Source="Images/black.png" />
+                    <Button x:Name="RedButton" Height="50" Width="50" Click="RedButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/red.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="BlueButton" Height="50" Width="50" Click="BlueButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/blue.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="GreenButton" Height="50" Width="50" Click="GreenButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/green.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="PurpleButton" Height="50" Width="50" Click="PurpleButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/purple.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="YellowButton" Height="50" Width="50" Click="YellowButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/yellow.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="OrangeButton" Height="50" Width="50" Click="OrangeButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/orange.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="BlackButton" Height="50" Width="50" Click="BlackButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/black.png"/>
+                        </Button.Background>
+                    </Button>
                 </StackPanel>
 
                 <Grid x:Name="ParticipantsGrid" Margin="1050,7500,0,0" Height="50" Width="100" Background="Gray">
