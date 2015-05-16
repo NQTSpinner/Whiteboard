@@ -139,5 +139,15 @@ namespace WhiteboardApp
             drawingAttributes.Size = new Size(20, 20);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
         }
+
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            InkCanvas.InkPresenter.InputProcessingConfiguration.Mode = InkInputProcessingMode.Erasing;
+        }
+
+        private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            InkCanvas.InkPresenter.InputProcessingConfiguration.Mode = InkInputProcessingMode.Inking;
+        }
     }
 }
