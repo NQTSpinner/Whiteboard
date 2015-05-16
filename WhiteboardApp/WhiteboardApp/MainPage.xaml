@@ -9,6 +9,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <SplitView x:Name="SplitView" DisplayMode="Overlay" OpenPaneLength="150" PanePlacement="Left" IsPaneOpen="True">
+            <!--Pane-->
             <SplitView.Pane>
                 <StackPanel Orientation="Vertical" Background="Gray">
                     <StackPanel Orientation="Horizontal">
@@ -57,8 +58,8 @@
                         <!--//bind listbox items-->
                     </ListBox>
                 </Grid>
+                <InkCanvas x:Name="InkCanvas"/>
             </Grid>
-            <!--<InkCanvas x:Name="InkCanvas"/>-->
         </SplitView>
     </Grid>
     
