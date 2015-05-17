@@ -7,8 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-
-
         <!--<ScrollViewer x:Name="ScrollGrid" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">-->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <VisualStateManager.VisualStateGroups>

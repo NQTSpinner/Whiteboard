@@ -225,6 +225,7 @@ namespace WhiteboardApp
         private void OpenMenuButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             this.SplitView.IsPaneOpen = true;
+            this.ParticipantsListBox.Visibility = Visibility.Collapsed;
         }
 
         private void OpenColourButton_Tapped(object sender, RoutedEventArgs e)
@@ -304,6 +305,28 @@ namespace WhiteboardApp
             {
                 this.ParticipantsListBox.Visibility = Visibility.Visible;
             }
+        }
+
+        private void ColourButton_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            CloseOtherPanels("Colour");
+            this.ColourPanel.Visibility = Visibility.Visible;
+        }
+
+        private void ColourPanel_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            CloseOtherPanels("");
+        }
+
+        private void SizeButton_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            CloseOtherPanels("Size");
+            this.SizePanel.Visibility = Visibility.Visible;
+        }
+
+        private void SizePanel_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            CloseOtherPanels("");
         }
     }
 }
