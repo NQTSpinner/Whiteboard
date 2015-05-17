@@ -5,10 +5,12 @@
     xmlns:local="using:WhiteboardApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <SplitView x:Name="SplitView" DisplayMode="Overlay" OpenPaneLength="150" PanePlacement="Left" IsPaneOpen="True">
+    <ScrollViewer x:Name="CanvasScrollView" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled" >
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <SplitView x:Name="SplitView" DisplayMode="Overlay" OpenPaneLength="150" PanePlacement="Left" IsPaneOpen="False">
             <!--Pane-->
             <SplitView.Pane>
                 <StackPanel Orientation="Vertical" Background="Gray">
@@ -17,30 +19,40 @@
                         <!--leave this icon outside so that when you tap it it opens up the window but stays on top (aka the pane moves out from behind it)-->
                         <TextBlock x:Name="UserName" Text="Carmen" VerticalAlignment="Bottom" Margin="5,0,0,8"/>
                     </StackPanel>
-                    <StackPanel Orientation="Vertical" Margin="5,0,0,0">
-                        <TextBlock x:Name="FriendsButton" Text="Friends" Margin="5,5,0,0"/>
-                        <TextBlock x:Name="WhiteboardsButton" Text="My Whiteboards" Margin="5,5,0,0"/>
-                        <TextBlock x:Name="SignOutButton" Text="Sign Out" Margin="5,5,0,0" Tapped="SignOutButton_Tapped"/>
+                    <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                        <Button x:Name="FriendsButton" Content="Friends" Width="150" Height="35" Margin="0,0,0,0" Background="Gray" HorizontalContentAlignment="Left"/>
+                        <Button x:Name="WhiteboardsButton" Content="My Whiteboards" Width="150" Height="35" Margin="0,0,0,0" Background="Gray" HorizontalContentAlignment="Left"/>
+                        <Button x:Name="SignOutButton" Content="Sign Out" Height="35" Width="150" Margin="0,0,0,0" Tapped="SignOutButton_Tapped" Background="Gray" HorizontalContentAlignment="Left"/>
+                        <Button x:Name="ParticipantsButton" Content="View Participants" Height="35" Width="150" Margin="0,15,0,0" Click="ParticipantsButton_Tapped" Background="Gray" HorizontalContentAlignment="Left"/>
+                        <ListBox x:Name="ParticipantsListBox" Background="Gray" ItemsSource="{Binding}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Margin="2,0,0,0"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBoxItem>HEYTHERER</ListBoxItem>
+                        </ListBox>
+                        
                     </StackPanel>
                 </StackPanel>
             </SplitView.Pane>
 
-
-            <Grid>
-                <InkCanvas x:Name="InkCanvas" />
+            
+                <Grid>
+                <InkCanvas x:Name="InkCanvas"/>
                 <StackPanel HorizontalAlignment="Left" Width="50" Orientation="Vertical">
                     <Image x:Name="OpenMenuButton" Source="Images/user.png" Height="50" Tapped="OpenMenuButton_Tapped" />
-                    <Button x:Name="ColourButton" Height="50" Width="50" Click="OpenColourButton_Tapped" >
+                    <Button x:Name="ColourButton" Height="50" Width="50" Click="OpenColourButton_Click" PointerEntered="ColourButton_PointerEntered" >
                         <Button.Background>
                             <ImageBrush ImageSource="Images/red.png"/>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="SizeButton" Height="50" Width="50" Click="SizeButton_Click" >
+                    <Button x:Name="SizeButton" Height="50" Width="50" Click="SizeButton_Click" PointerEntered="SizeButton_PointerEntered" >
                         <Button.Background>
                             <ImageBrush ImageSource="Images/brush.png"/>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="SquareButton" Height="50" Width="50" Click="SquareButton_Click" >
+                    <Button x:Name="SquareButton" Height="50" Width="50" Click="Load_Strokes" >
                         <Button.Background>
                             <ImageBrush ImageSource="Images/square.png"/>
                         </Button.Background>
@@ -60,14 +72,13 @@
                             <ImageBrush ImageSource="Images/text.png"/>
                         </Button.Background>
                     </Button>
-                    <ToggleButton  x:Name="FingerDrawButton" Height="50" Width="50" Checked="FingerDrawButton_Checked" Unchecked="FingerDrawButton_Unchecked">
+                    <ToggleButton  x:Name="FingerDrawButton" Height="50" Width="50" Checked="FingerDrawButton_Checked" Unchecked="FingerDrawButton_Unchecked" >
                         <ToggleButton.Background>
                             <ImageBrush ImageSource="Images/finger.png" />
                         </ToggleButton.Background>
                     </ToggleButton>
-                    <Button Click="PushNotificationButton_Click" />
                 </StackPanel>
-                <StackPanel x:Name="ColourPanel" Margin="50,50,0,0" Width="50" HorizontalAlignment="Left" Visibility="Collapsed">
+                <StackPanel x:Name="ColourPanel" Margin="50,50,0,0" Width="50" HorizontalAlignment="Left" Visibility="Collapsed" PointerExited="ColourPanel_PointerExited">
                     <Button x:Name="RedButton" Height="50" Width="50" Click="RedButton_Click" >
                         <Button.Background>
                             <ImageBrush ImageSource="Images/red.png"/>
@@ -104,7 +115,7 @@
                         </Button.Background>
                     </Button>
                 </StackPanel>
-                <StackPanel x:Name="SizePanel" Margin="50,100,0,0" Width="50" HorizontalAlignment="Left" Visibility="Collapsed">
+                <StackPanel x:Name="SizePanel" Margin="50,100,0,0" Width="50" HorizontalAlignment="Left" Visibility="Collapsed" PointerExited="SizePanel_PointerExited">
                     <Button x:Name="ThickButton" Height="50" Width="50" Click="Thick_Stroke_Button_Click" >
                         <Button.Background>
                             <ImageBrush ImageSource="Images/largebrush.png"/>
@@ -122,17 +133,23 @@
                     </Button>
                 </StackPanel>
                 
-                <Grid x:Name="ParticipantsGrid" Margin="1050,7500,0,0" Height="50" Width="100" Background="Gray">
+                <!--<Grid x:Name="ParticipantsGrid" Margin="1050,7500,0,0" Height="50" Width="100" Background="Gray">
                     <TextBlock x:Name="ParticipantsTab" Visibility="Visible" Width="100" Height="50" VerticalAlignment="Bottom" Text="7 Participants" TextAlignment="Center" Margin="0,5,0,0"/>
-                    <!--//when blick on the textblock or grid, collapse textblock and make listbox visible, and change grid margin and height to match listbox height-->
+                    --><!--//when blick on the textblock or grid, collapse textblock and make listbox visible, and change grid margin and height to match listbox height--><!--
                     <ListBox x:Name="ParticipantsList" Visibility="Collapsed" Width="100" VerticalAlignment="Bottom">
-                        <ListBoxItem Content="HELLO"/>
-                        <!--//bind listbox items-->
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                <TextBlock Width="100" Height="50" VerticalAlignment="Bottom" Text="{Binding ParticipantName}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        --><!--//bind listbox items--><!--
                     </ListBox>
-                </Grid>
+                </Grid>-->
                 
             </Grid>
+    </ScrollViewer>
         </SplitView>
     </Grid>
-    
 </Page>

@@ -7,21 +7,59 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+        <!--<ScrollViewer x:Name="ScrollGrid" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">-->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Orientation="Vertical" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Image x:Name="WhiteboardAppLogo" Height="150" Width="150" Source="Images/user.png"/>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState x:Name="Narrow">
+                        <VisualState.Setters>
+                            <Setter Target="leftBG.Visibility" Value="Collapsed" />
+                            <Setter Target="rightBG.Visibility" Value="Collapsed" />
+                            <Setter Target="cornerBG.Visibility" Value="Visible" />
+                        </VisualState.Setters>
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="0" />
+                        </VisualState.StateTriggers>
+                    </VisualState>
+
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Target="leftBG.Visibility" Value="Visible" />
+                            <Setter Target="rightBG.Visibility" Value="Visible" />
+                            <Setter Target="cornerBG.Visibility" Value="Collapsed" />
+                        </VisualState.Setters>
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="600" />
+                        </VisualState.StateTriggers>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+            <Image x:Name="leftBG" HorizontalAlignment="Center" Grid.Column="0" Source="Images/leftbg.png" />
+            <Image x:Name="rightBG" HorizontalAlignment="Center" Grid.Column="2" Source="Images/rightbg.png"/>
+        </Grid>
+        <Image x:Name="cornerBG" Height="150" HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="Images/corner.png"/>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image x:Name="WhiteboardAppLogo" Width="400" Source="Images/scrumboardbanner.png" HorizontalAlignment="Center"/>
             <TextBlock Text="Sign In" HorizontalAlignment="Center" FontSize="30" Margin="0,10,0,0"/>
             <TextBlock Text="or Create an Account" HorizontalAlignment="Center" FontSize="15" Margin="0,0,0,5"/>
-            <TextBox x:Name="UsernameBox" Text="Username or email" Height="30" TextAlignment="Left" Margin="0,7,0,7"/>
-            <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="PasswordBox" Text="Password" Height="30" TextAlignment="Left" Width="165" Margin="0,5,0,15" />
-                <Button x:Name="SubmitButton" Height="27" Width="27" Margin="5,-7,0,0" BorderBrush="Black" BorderThickness="1" Click="SubmitButton_Click">
+            <TextBox x:Name="UsernameBox" Text="Username or email" Height="30" Width="250" TextAlignment="Left" Margin="0,7,0,7" GotFocus="UsernameBox_GotFocus" LostFocus="UsernameBox_LostFocus" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox x:Name="PasswordBox" Text="Password" Height="30" TextAlignment="Left" Width="218" Margin="0,5,0,15" GotFocus="PasswordBox_GotFocus" LostFocus="PasswordBox_LostFocus" TextChanged="PasswordBox_TextChanged" />
+                <PasswordBox x:Name="PasswordBoxHidden" Visibility ="Collapsed" Height="30" Width="218" Margin="0,5,0,15" LostFocus="PasswordBoxHidden_LostFocus" />
+                <Button x:Name="SubmitButton" Height="32" Width="32" Margin="0,-10,0,0" BorderBrush="Gray" BorderThickness="1" Click="SubmitButton_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="Images/nextbutton.png"/>
                     </Button.Background>
                 </Button>
             </StackPanel>
-            <TextBlock x:Name="LoginMessageBlock" Text="Tells if username or pw is okay" Foreground="Red"/>
+            <TextBlock x:Name="LoginMessageBlock" Text=" " Foreground="Red" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
+        <!--</ScrollViewer>-->
 </Page>
