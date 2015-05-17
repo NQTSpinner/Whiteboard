@@ -140,7 +140,7 @@
                 <!--//when blick on the textblock or grid, collapse textblock and make listbox visible, and change grid margin and height to match listbox height-->
                     <StackPanel x:Name="HiddenChatPanel" Visibility="Collapsed">
                         <ScrollViewer x:Name="ChatScrollViewer" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled">
-                        <ListBox x:Name="ChatListBox" Width="150" Height="500" Background="LightBlue" VerticalAlignment="Bottom" ItemsSource="{Binding}">
+                        <ListBox x:Name="ChatListBox" Width="150" Height="500" Background="LavenderBlush" VerticalAlignment="Bottom" ItemsSource="{Binding}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Margin="0,-2,0,-2">

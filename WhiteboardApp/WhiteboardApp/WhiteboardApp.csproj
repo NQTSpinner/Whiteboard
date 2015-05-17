@@ -129,6 +129,8 @@
     <Content Include="Images\finger.png" />
     <Content Include="Images\fingerselect.png" />
     <Content Include="Images\green.png" />
+    <Content Include="Images\icon150.png" />
+    <Content Include="Images\icon44.png" />
     <Content Include="Images\largebrush.png" />
     <Content Include="Images\largebrush2.png" />
     <Content Include="Images\leftbg.png" />
@@ -142,9 +144,11 @@
     <Content Include="Images\rightbg.png" />
     <Content Include="Images\scrumboard.png" />
     <Content Include="Images\scrumboardbanner.png" />
+    <Content Include="Images\scrumboardtitle.png" />
     <Content Include="Images\sendmsg.png" />
     <Content Include="Images\smallbrush.png" />
     <Content Include="Images\smallbrush2.png" />
+    <Content Include="Images\splash.png" />
     <Content Include="Images\square.png" />
     <Content Include="Images\text.png" />
     <Content Include="Images\user.png" />
