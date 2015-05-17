@@ -114,6 +114,7 @@
     <Content Include="Images\brush.png" />
     <Content Include="Images\circle.png" />
     <Content Include="Images\eraser.png" />
+    <Content Include="Images\finger.png" />
     <Content Include="Images\green.png" />
     <Content Include="Images\largebrush.png" />
     <Content Include="Images\medbrush.png" />

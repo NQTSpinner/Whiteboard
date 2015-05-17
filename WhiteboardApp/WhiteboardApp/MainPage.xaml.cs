@@ -36,7 +36,7 @@ namespace WhiteboardApp
 
             InkCanvas.InkPresenter.StrokesCollected += Save_Strokes;
             InkCanvas.InkPresenter.StrokesErased += Erase_Strokes;
-            InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Touch | Windows.UI.Core.CoreInputDeviceTypes.Pen;
+            InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
 
         private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
@@ -243,6 +243,16 @@ namespace WhiteboardApp
         private void TextButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void FingerDrawButton_Checked(object sender, RoutedEventArgs e)
+        {
+            InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Touch | Windows.UI.Core.CoreInputDeviceTypes.Pen;
+        }
+
+        private void FingerDrawButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
     }
 }
