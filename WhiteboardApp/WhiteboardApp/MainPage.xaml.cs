@@ -71,6 +71,8 @@ namespace WhiteboardApp
 
             this.InitializeComponent();
 
+            UserName.Text = UserVariables.UserName;
+
             this.ParticipantsListBox.ItemsSource = ParticipantsCollection;
             this.ChatListBox.ItemsSource = ChatCollection;
 
@@ -526,6 +528,29 @@ namespace WhiteboardApp
         {
             InviteFriend.Text = "User or Email";
             InviteFriendPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void InsertImageButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ExtendToolbar_Click(object sender, RoutedEventArgs e)
+        {
+            if (ExtendedToolbarPanel.Visibility == Visibility.Visible) //compress it
+            {
+                ExtendedToolbarPanel.Visibility = Visibility.Collapsed;
+                var brush = new ImageBrush();
+                brush.ImageSource = new BitmapImage(new Uri("ms-appx:/Images/extendToolbar.png"));
+                this.ExtendToolbar.Background = brush;
+            }
+            else
+            {
+                var brush = new ImageBrush();
+                brush.ImageSource = new BitmapImage(new Uri("ms-appx:/Images/compressToolbar.png"));
+                this.ExtendToolbar.Background = brush;
+                ExtendedToolbarPanel.Visibility = Visibility.Visible;
+            }
         }
     }
 

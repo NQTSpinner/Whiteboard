@@ -22,7 +22,7 @@
                         <StackPanel Orientation="Vertical" Margin="0,10,0,0">
                             <Button x:Name="FriendsButton" Content="Invite to Board" Width="150" Height="35" Margin="0,0,0,0" Background="Lavender" HorizontalContentAlignment="Left" Click="FriendsButton_Click"/>
                         <StackPanel x:Name="InviteFriendPanel" Visibility="Collapsed" Orientation="Horizontal">
-                            <TextBox x:Name="InviteFriend" Text="User or Email" GotFocus="InviteFriend_GotFocus" LostFocus="InviteFriend_LostFocus"/>
+                            <TextBox x:Name="InviteFriend" Width="118" Text="User or Email" GotFocus="InviteFriend_GotFocus" LostFocus="InviteFriend_LostFocus"/>
                             <Button x:Name="InviteFriendSubmitButton" Height="32" Width="32" Margin="0,0,0,0" BorderBrush="Gray" BorderThickness="1" Click="SubmitButton_Click">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images/nextbutton.png"/>
@@ -62,6 +62,17 @@
                             <ImageBrush ImageSource="Images/brush.png"/>
                         </Button.Background>
                     </Button>
+                    <Button x:Name="EraserButton" Height="50" Width="50" Click="EraserButton_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/eraser.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button  x:Name="FingerDrawButton" Height="50" Width="50" Click="FingerDrawButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/finger.png" />
+                        </Button.Background>
+                    </Button>
+                    <StackPanel x:Name="ExtendedToolbarPanel" Visibility="Collapsed">
                     <Button x:Name="SquareButton" Height="50" Width="50" Click="Load_Strokes" >
                         <Button.Background>
                             <ImageBrush ImageSource="Images/square.png"/>
@@ -72,21 +83,22 @@
                             <ImageBrush ImageSource="Images/circle.png"/>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="EraserButton" Height="50" Width="50" Click="EraserButton_Click">
-                        <Button.Background>
-                            <ImageBrush ImageSource="Images/eraser.png"/>
-                        </Button.Background>
-                    </Button>
-                    <Button x:Name="TextButton" Height="50" Width="50" Click="TextButton_Click" >
-                        <Button.Background>
-                            <ImageBrush ImageSource="Images/text.png"/>
-                        </Button.Background>
-                    </Button>
-                    <Button  x:Name="FingerDrawButton" Height="50" Width="50" Click="FingerDrawButton_Click" >
-                        <Button.Background>
-                            <ImageBrush ImageSource="Images/finger.png" />
-                        </Button.Background>
-                    </Button>
+                        <Button x:Name="TextButton" Height="50" Width="50" Click="TextButton_Click" >
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/text.png"/>
+                            </Button.Background>
+                        </Button>
+                        <Button x:Name="InsertImageButton" Height="50" Width="50" Click="InsertImageButton_Click" >
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/image.png"/>
+                            </Button.Background>
+                        </Button>
+                    </StackPanel>
+                <Button x:Name="ExtendToolbar" Height="30" Width="50" Click="ExtendToolbar_Click" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="Images/extendToolbar.png"/>
+                    </Button.Background>
+                </Button>
                 </StackPanel>
                 <StackPanel x:Name="ColourPanel" Margin="50,50,0,0" Width="50" HorizontalAlignment="Left" Visibility="Collapsed" PointerExited="ColourPanel_PointerExited">
                     <Button x:Name="RedButton" Height="50" Width="50" Click="RedButton_Click" >
@@ -94,19 +106,9 @@
                             <ImageBrush ImageSource="Images/red.png"/>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="BlueButton" Height="50" Width="50" Click="BlueButton_Click" >
+                    <Button x:Name="OrangeButton" Height="50" Width="50" Click="OrangeButton_Click" >
                         <Button.Background>
-                            <ImageBrush ImageSource="Images/blue.png"/>
-                        </Button.Background>
-                    </Button>
-                    <Button x:Name="GreenButton" Height="50" Width="50" Click="GreenButton_Click" >
-                        <Button.Background>
-                            <ImageBrush ImageSource="Images/green.png"/>
-                        </Button.Background>
-                    </Button>
-                    <Button x:Name="PurpleButton" Height="50" Width="50" Click="PurpleButton_Click" >
-                        <Button.Background>
-                            <ImageBrush ImageSource="Images/purple.png"/>
+                            <ImageBrush ImageSource="Images/orange.png"/>
                         </Button.Background>
                     </Button>
                     <Button x:Name="YellowButton" Height="50" Width="50" Click="YellowButton_Click" >
@@ -114,9 +116,19 @@
                             <ImageBrush ImageSource="Images/yellow.png"/>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="OrangeButton" Height="50" Width="50" Click="OrangeButton_Click" >
+                    <Button x:Name="GreenButton" Height="50" Width="50" Click="GreenButton_Click" >
                         <Button.Background>
-                            <ImageBrush ImageSource="Images/orange.png"/>
+                            <ImageBrush ImageSource="Images/green.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="BlueButton" Height="50" Width="50" Click="BlueButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/blue.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="PurpleButton" Height="50" Width="50" Click="PurpleButton_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/purple.png"/>
                         </Button.Background>
                     </Button>
                     <Button x:Name="BlackButton" Height="50" Width="50" Click="BlackButton_Click" >
@@ -149,7 +161,7 @@
                 <!--//when blick on the textblock or grid, collapse textblock and make listbox visible, and change grid margin and height to match listbox height-->
                     <StackPanel x:Name="HiddenChatPanel" Visibility="Collapsed">
                         <ScrollViewer x:Name="ChatScrollViewer" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled">
-                        <ListBox x:Name="ChatListBox" Width="150" Height="500" Background="LavenderBlush" VerticalAlignment="Bottom" ItemsSource="{Binding}">
+                        <ListBox x:Name="ChatListBox" Width="150" Height="300" Background="LavenderBlush" VerticalAlignment="Bottom" ItemsSource="{Binding}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Margin="0,-2,0,-2">

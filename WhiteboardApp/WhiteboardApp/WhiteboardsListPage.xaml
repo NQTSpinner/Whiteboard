@@ -12,7 +12,7 @@
         <StackPanel>
         <!--<TextBlock Text="My ScrumBoards" Foreground="RoyalBlue" FontSize="40" Margin="0,20,0,20" HorizontalAlignment="Center"/>-->
         <Image Source="Images/scrumboardtitle.png" Height="120"/>
-            <Button x:Name="CreateWhiteboardButton" Margin="0,40,0,0" Foreground="BlueViolet" Width="400" Content="+ Create New ScrumBoard" HorizontalAlignment="Center" FontSize="20" Background="LavenderBlush" Click="CreateWhiteboardButton_Click"></Button>
+            <Button x:Name="CreateWhiteboardButton" Margin="0,40,0,0" Foreground="BlueViolet" Width="400" Height="50" Content="+ Create New ScrumBoard" HorizontalAlignment="Center" FontSize="20" Background="LavenderBlush" Click="CreateWhiteboardButton_Click"></Button>
             <ListBox x:Name="WhiteboardsListBox" HorizontalAlignment="Center" Width="400" Margin="0,30,0,0" ItemsSource="{Binding}" Background="LemonChiffon" SelectionChanged="WhiteboardsListBox_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
