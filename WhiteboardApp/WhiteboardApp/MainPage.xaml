@@ -5,9 +5,11 @@
     xmlns:local="using:WhiteboardApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <ScrollViewer x:Name="CanvasScrollView" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled" >
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <SplitView x:Name="SplitView" DisplayMode="Overlay" OpenPaneLength="150" PanePlacement="Left" IsPaneOpen="False">
             <!--Pane-->
             <SplitView.Pane>
@@ -35,11 +37,12 @@
                 </StackPanel>
             </SplitView.Pane>
 
-            <Grid>
+            
+                <Grid>
                 <InkCanvas x:Name="InkCanvas"/>
                 <StackPanel HorizontalAlignment="Left" Width="50" Orientation="Vertical">
                     <Image x:Name="OpenMenuButton" Source="Images/user.png" Height="50" Tapped="OpenMenuButton_Tapped" />
-                    <Button x:Name="ColourButton" Height="50" Width="50" Click="OpenColourButton_Tapped" PointerEntered="ColourButton_PointerEntered" >
+                    <Button x:Name="ColourButton" Height="50" Width="50" Click="OpenColourButton_Click" PointerEntered="ColourButton_PointerEntered" >
                         <Button.Background>
                             <ImageBrush ImageSource="Images/red.png"/>
                         </Button.Background>
@@ -146,7 +149,7 @@
                 </Grid>-->
                 
             </Grid>
+    </ScrollViewer>
         </SplitView>
     </Grid>
-    
 </Page>

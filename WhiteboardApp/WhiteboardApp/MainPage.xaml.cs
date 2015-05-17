@@ -31,6 +31,8 @@ namespace WhiteboardApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        bool colourClicked = false;
+        bool sizeClicked = false;
         public static ObservableCollection<string> ParticipantsCollection = new ObservableCollection<string>();
 
         DispatcherTimer dispatchTimer;
@@ -54,6 +56,13 @@ namespace WhiteboardApp
             InkCanvas.InkPresenter.StrokesCollected += Save_Strokes;
             InkCanvas.InkPresenter.StrokesErased += Erase_Strokes;
             InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
+        }
+
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            InkCanvas.Height = this.Height;
+            InkCanvas.Width = this.Width;
         }
 
         private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
@@ -183,6 +192,7 @@ namespace WhiteboardApp
 
         private void SetColourIcon(string path)
         {
+            colourClicked = false;
             var brush = new ImageBrush();
             brush.ImageSource = new BitmapImage(new Uri("ms-appx:/" + path));
             this.ColourButton.Background = brush;
@@ -190,6 +200,7 @@ namespace WhiteboardApp
 
         private void Thin_Stroke_Button_Click(object sender, RoutedEventArgs e)
         {
+            sizeClicked = false;
             CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Size = new Size(5, 5);
@@ -198,6 +209,7 @@ namespace WhiteboardApp
 
         private void Medium_Stroke_Button_Click(object sender, RoutedEventArgs e)
         {
+            sizeClicked = false;
             CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Size = new Size(10, 10);
@@ -206,6 +218,7 @@ namespace WhiteboardApp
 
         private void Thick_Stroke_Button_Click(object sender, RoutedEventArgs e)
         {
+            sizeClicked = false;
             CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Size = new Size(20, 20);
@@ -228,29 +241,33 @@ namespace WhiteboardApp
             this.ParticipantsListBox.Visibility = Visibility.Collapsed;
         }
 
-        private void OpenColourButton_Tapped(object sender, RoutedEventArgs e)
+        private void OpenColourButton_Click(object sender, RoutedEventArgs e)
         {
             CloseOtherPanels("Colour");
-            if (this.ColourPanel.Visibility.Equals(Visibility.Visible))
+            if (colourClicked)
             {
                 this.ColourPanel.Visibility = Visibility.Collapsed;
+                colourClicked = false;
             }
             else
             {
                 this.ColourPanel.Visibility = Visibility.Visible;
+                colourClicked = true;
             }
         }
 
         private void SizeButton_Click(object sender, RoutedEventArgs e)
         {
             CloseOtherPanels("Size");
-            if (this.SizePanel.Visibility.Equals(Visibility.Visible))
+            if (sizeClicked)
             {
                 this.SizePanel.Visibility = Visibility.Collapsed;
+                sizeClicked = false;
             }
             else
             {
                 this.SizePanel.Visibility = Visibility.Visible;
+                sizeClicked = true;
             }
         }
 
@@ -315,6 +332,7 @@ namespace WhiteboardApp
 
         private void ColourPanel_PointerExited(object sender, PointerRoutedEventArgs e)
         {
+            if (!colourClicked)
             CloseOtherPanels("");
         }
 
@@ -326,7 +344,9 @@ namespace WhiteboardApp
 
         private void SizePanel_PointerExited(object sender, PointerRoutedEventArgs e)
         {
+            if (!sizeClicked)
             CloseOtherPanels("");
         }
+
     }
 }
