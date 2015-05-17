@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="WhiteboardApp.WhiteboardsListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WhiteboardApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+        <TextBlock Text="My ScrumBoards" Foreground="RoyalBlue" FontSize="40" Margin="0,20,0,20" HorizontalAlignment="Center"/>
+        <Button x:Name="CreateWhiteboardButton" Foreground="BlueViolet" Content="+ Create New ScrumBoard" HorizontalAlignment="Center" FontSize="20" Background="LavenderBlush" Click="CreateWhiteboardButton_Click"></Button>
+        <ListBox x:Name="WhiteboardsListBox" HorizontalAlignment="Center" Margin="100,0,50,0" ItemsSource="{Binding}" Background="LemonChiffon" SelectionChanged="WhiteboardsListBox_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                        <TextBlock Foreground="BlueViolet" Text="{Binding}" Margin="2,2,0,0"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        </StackPanel>
+    </Grid>
+</Page>
