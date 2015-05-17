@@ -26,6 +26,8 @@ namespace WhiteboardApp
     /// </summary>
     public sealed partial class LoginPage : Page
     {
+        string password;
+        string defaultText = "Username or email";
         private string URL = "107.170.241.204/api/authenticate?user=[username]&pass=[pass]";
         public LoginPage()
         {
@@ -34,7 +36,7 @@ namespace WhiteboardApp
 
         private async void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            URL = "http://107.170.241.204/api/authenticate?user=" + UsernameBox.Text + "&pass=" + PasswordBox.Text;
+            URL = "http://107.170.241.204/api/authenticate?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
             HttpClient client = new HttpClient();
             string a = await client.GetStringAsync(URL);
             a = a.Substring(18, a.Length - 18 - 1);
@@ -47,7 +49,7 @@ namespace WhiteboardApp
             }
             else if (String.Compare(a, "\"User Doesnt Exist\"") == 0)
             {
-                URL = "http://107.170.241.204/api/createaccount?user=" + UsernameBox.Text + "&pass=" + PasswordBox.Text;
+                URL = "http://107.170.241.204/api/createaccount?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
                 HttpClient clientB = new HttpClient();
                 string b = await client.GetStringAsync(URL);
                 b = b.Substring(18, a.Length - 18 - 1);
@@ -55,6 +57,42 @@ namespace WhiteboardApp
             }
             else {
                 LoginMessageBlock.Text = "Incorrect password";
+            }
+        }
+
+        private void UsernameBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            UsernameBox.Text = UsernameBox.Text == defaultText ? string.Empty : UsernameBox.Text;
+        }
+
+        private void UsernameBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            UsernameBox.Text = UsernameBox.Text == string.Empty ? defaultText : UsernameBox.Text;
+        }
+
+        private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PasswordBoxHidden.Visibility = Visibility.Visible;
+            PasswordBox.Visibility = Visibility.Collapsed;
+            this.PasswordBoxHidden.Focus(FocusState.Pointer);
+        }
+
+        private void PasswordBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            PasswordBox.Text = PasswordBox.Text == string.Empty ? "Password" : PasswordBox.Text;
+        }
+
+        private void PasswordBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
+
+        private void PasswordBoxHidden_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (String.Empty == PasswordBoxHidden.Password) {
+                PasswordBoxHidden.Visibility = Visibility.Collapsed;
+                PasswordBox.Text = "Password";
+                PasswordBox.Visibility = Visibility.Visible;
             }
         }
     }
