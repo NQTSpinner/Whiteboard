@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -48,6 +49,11 @@ namespace WhiteboardApp
         {
             this.InitializeComponent();
             getBoardList("test");
+        }
+
+        private void PageLoaded(object sender, object e)
+        {
+            DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
         }
 
         private void WhiteboardsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
