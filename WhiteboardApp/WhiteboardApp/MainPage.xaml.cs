@@ -44,7 +44,7 @@ namespace WhiteboardApp
         bool eraserModeToggle = false;
         bool fingerModeToggle = false;
         bool isDouble = false;
-        string myuser = "Carmen";
+        string myuser = UserVariables.UserName;
         bool colourClicked = false;
         bool sizeClicked = false;
         public static ObservableCollection<string> ParticipantsCollection = new ObservableCollection<string>();
@@ -468,7 +468,7 @@ namespace WhiteboardApp
             CloudBlobContainer container = blobClient.GetContainerReference("test");
 
             // Retrieve reference to a blob named "myblob".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(UserVariables.CurrentBoard.ToString());
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(UserVariables.CurrentBoard);
 
             //// Create or overwrite the "myblob" blob with contents from a local file.
             //    try

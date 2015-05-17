@@ -24,31 +24,26 @@ namespace WhiteboardApp
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     /// 
-    public class util
-    {
-
-        
-    }
-
 
     public sealed partial class WhiteboardsListPage : Page
     {
         ObservableCollection<string> collection;
-
-        public async void getBoardList(string username)
+        string result;
+        public async void getBoardList()
         {
-            string URL = "http://107.170.241.204/api/getUserBoards/?user=" + username;
+            string URL = "http://107.170.241.204/api/getUserBoards/?user=" + UserVariables.UserName;
             HttpClient client = new HttpClient();
             string a = await client.GetStringAsync(URL);
             Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(a);
             List<string> keyList = new List<string>(values.Keys);
             collection = new ObservableCollection<string>(keyList);
+            WhiteboardsListBox.ItemsSource = collection;
         }
 
         public WhiteboardsListPage()
         {
             this.InitializeComponent();
-            getBoardList("test");
+            getBoardList();
         }
 
         private void PageLoaded(object sender, object e)
@@ -58,14 +53,21 @@ namespace WhiteboardApp
 
         private void WhiteboardsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            UserVariables.CurrentBoard = (string)(((ListBox)sender).SelectedValue);
             if (this.Frame != null)
             {
                 this.Frame.Navigate(typeof(MainPage));
             }
         }
 
-        private void CreateWhiteboardButton_Click(object sender, RoutedEventArgs e)
+        private async void CreateWhiteboardButton_Click(object sender, RoutedEventArgs e)
         {
+            string URL = "http://107.170.241.204/api/CreateBoard/?user=" + UserVariables.UserName;
+            HttpClient client = new HttpClient();
+            string a = await client.GetStringAsync(URL);
+            Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(a);
+            UserVariables.CurrentBoard = values["boardId"];
+
             if (this.Frame != null)
             {
                 this.Frame.Navigate(typeof(MainPage));
