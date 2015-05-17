@@ -21,6 +21,10 @@ using Windows.UI.Xaml.Navigation;
 using System.Net.Http;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -56,14 +60,37 @@ namespace WhiteboardApp
             InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
 
-        private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
+        private async Task Upload_Strokes()
         {
+            // Retrieve storage account from connection string.
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=whiteboard01;AccountKey=z0rUBRkcznOHooMWbQ/lTJrytth6PgYsnnnTzH++AaLVd3tqe8nyinwebXW4OKfrVNfjt3726zlI6DZlQiXkoQ==");
+
+            // Create the blob client.
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = blobClient.GetContainerReference("test");
+
+            // Retrieve reference to a blob named "myblob".
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference("newfilehah");
+
+            // Create or overwrite the "myblob" blob with contents from a local file.
+            try
+            {
+                await blockBlob.DeleteAsync();
+            }
+            catch
+            {
+
+            }
+
             var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
             var openedFile = await file.AsTask();
             if (openedFile != null)
             {
                 try
                 {
+                    blockBlob.DeleteAsync();
                     using (IRandomAccessStream stream = await openedFile.OpenAsync(FileAccessMode.ReadWrite))
                     {
                         await InkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
@@ -71,29 +98,20 @@ namespace WhiteboardApp
                 }
                 catch (Exception ex)
                 {
-
+                    throw ex;
                 }
+                await blockBlob.UploadFromFileAsync(openedFile);
             }
+        }
+
+        private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
+        {
+            await Upload_Strokes();
         }
 
         private async void Save_Strokes(InkPresenter sender, InkStrokesCollectedEventArgs args)
         {
-            var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
-            var openedFile = await file.AsTask();
-            if (openedFile != null)
-            {
-                try
-                {
-                    using (IRandomAccessStream stream = await openedFile.OpenAsync(FileAccessMode.ReadWrite))
-                    {
-                        await InkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                }
-            }
+            await Upload_Strokes();
         }
 
         private async void Load_Strokes(object sender, object e)
@@ -264,10 +282,12 @@ namespace WhiteboardApp
             CloseOtherPanels("");
         }
 
-        private void CircleButton_Click(object sender, RoutedEventArgs e)
+        private async void CircleButton_Click(object sender, RoutedEventArgs e)
         {
-            CloseOtherPanels("");
+            await Upload_Strokes();
         }
+
+
 
         private void TextButton_Click(object sender, RoutedEventArgs e)
         {
