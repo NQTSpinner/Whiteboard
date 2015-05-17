@@ -24,7 +24,7 @@ namespace WhiteboardApp
     public static class UserVariables
     {
         public static int CurrentBoard = 1;
-
+        public static string UserName = "";
     }
     //class MobileServiceTable
     //{

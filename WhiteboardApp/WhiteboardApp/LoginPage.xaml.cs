@@ -47,6 +47,7 @@ namespace WhiteboardApp
             {
                 if (this.Frame != null)
                 {
+                    UserVariables.UserName = UsernameBox.Text;
                     this.Frame.Navigate(typeof(MainPage));
                 }
             }
