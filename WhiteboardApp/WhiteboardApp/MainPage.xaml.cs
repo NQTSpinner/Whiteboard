@@ -139,20 +139,24 @@ namespace WhiteboardApp
             HttpClient httpClient = new HttpClient();
             Task<Stream> streamAsync = httpClient.GetStreamAsync(URL);
             Stream result = streamAsync.Result;
-            Windows.Storage.Streams.IInputStream inStream = result.AsInputStream();
-            
-            using (inStream)
+            if (result != null)
             {
-                try
+                Windows.Storage.Streams.IInputStream inStream = result.AsInputStream();
+
+                using (inStream)
                 {
-                    InkCanvas.InkPresenter.StrokeContainer.LoadAsync(inStream);
-                }
-                catch(Exception ex)
-                {
+                    try
+                    {
+                        InkCanvas.InkPresenter.StrokeContainer.LoadAsync(inStream);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
 
                 }
-                
             }
+            
         }
 
         #endregion

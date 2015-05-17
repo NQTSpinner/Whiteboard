@@ -47,8 +47,8 @@ namespace WhiteboardApp
             {
                 if (this.Frame != null)
                 {
-                    UserVariables.UserName = UsernameBox.Text;
-                    this.Frame.Navigate(typeof(MainPage));
+                        UserVariables.UserName = UsernameBox.Text;
+                        this.Frame.Navigate(typeof(WhiteboardsListPage));
                 }
             }
             else if (String.Compare(a, "\"User Doesnt Exist\"") == 0)
