@@ -60,6 +60,11 @@
                             <ImageBrush ImageSource="Images/text.png"/>
                         </Button.Background>
                     </Button>
+                    <ToggleButton  x:Name="FingerDrawButton" Height="50" Width="50" Checked="FingerDrawButton_Checked" Unchecked="FingerDrawButton_Unchecked">
+                        <ToggleButton.Background>
+                            <ImageBrush ImageSource="Images/finger.png" />
+                        </ToggleButton.Background>
+                    </ToggleButton>
                 </StackPanel>
                 <StackPanel x:Name="ColourPanel" Margin="50,50,0,0" Width="50" HorizontalAlignment="Left" Visibility="Collapsed">
                     <Button x:Name="RedButton" Height="50" Width="50" Click="RedButton_Click" >
