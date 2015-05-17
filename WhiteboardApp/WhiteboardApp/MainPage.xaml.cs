@@ -495,7 +495,7 @@ namespace WhiteboardApp
                 {
                     throw ex;
                 }
-                blockBlob.UploadFromFileAsync(openedFile);
+                await blockBlob.UploadFromFileAsync(openedFile);
             }
         }
         #endregion
