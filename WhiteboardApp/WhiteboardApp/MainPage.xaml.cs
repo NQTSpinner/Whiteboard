@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Navigation;
 using System.Net.Http;
 using System.IO;
 using System.Threading.Tasks;
+using Windows.Graphics.Display;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -61,8 +62,9 @@ namespace WhiteboardApp
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            InkCanvas.Height = this.Height;
-            InkCanvas.Width = this.Width;
+            InkCanvas.Height = 4096;
+            InkCanvas.Width = 4096;
+            DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
         }
 
         private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)

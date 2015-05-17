@@ -9,6 +9,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -32,6 +33,7 @@ namespace WhiteboardApp
         public LoginPage()
         {
             this.InitializeComponent();
+            DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
         }
 
         private async void SubmitButton_Click(object sender, RoutedEventArgs e)
