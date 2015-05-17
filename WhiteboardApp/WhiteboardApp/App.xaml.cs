@@ -20,7 +20,10 @@ using Windows.UI.Xaml.Navigation;
 
 namespace WhiteboardApp
 {
-
+    public static class UserVariables
+    {
+        public static int CurrentBoard = 1;
+    }
     //class MobileServiceTable
     //{
     //    public MobileServiceClient WhiteboardCloudClient;

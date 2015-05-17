@@ -105,7 +105,7 @@ namespace WhiteboardApp
             CloudBlobContainer container = blobClient.GetContainerReference("test");
 
             // Retrieve reference to a blob named "myblob".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference("newfilehah");
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(UserVariables.CurrentBoard.ToString());
 
             //// Create or overwrite the "myblob" blob with contents from a local file.
             //    try
@@ -171,7 +171,7 @@ namespace WhiteboardApp
 
         private async void Load_Strokes(object sender, object e)
         {
-            string URL = "http://whiteboard01.blob.core.windows.net/test/newfilehah";
+            string URL = "http://whiteboard01.blob.core.windows.net/test/"+UserVariables.CurrentBoard;
             HttpClient httpClient = new HttpClient();
             Task<Stream> streamAsync = httpClient.GetStreamAsync(URL);
             Stream result = streamAsync.Result;
