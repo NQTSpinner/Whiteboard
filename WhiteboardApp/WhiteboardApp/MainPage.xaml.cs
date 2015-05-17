@@ -40,6 +40,7 @@ namespace WhiteboardApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        #region Variables
         bool eraserModeToggle = false;
         bool fingerModeToggle = false;
         bool isDouble = false;
@@ -54,8 +55,9 @@ namespace WhiteboardApp
 
         DispatcherTimer InkUpdateTimer = new DispatcherTimer();
         //public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
 
-
+        #region Constructors
         public MainPage()
         {
             ChatCollection = new ObservableCollection<ChatMessage>();
@@ -83,60 +85,20 @@ namespace WhiteboardApp
             InkCanvas.InkPresenter.StrokesErased += Erase_Strokes;
             InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
+        #endregion
 
-        private async void Update_Strokes(object sender, object e)
-        {
-            await Upload_Strokes();
-        }
-
+        #region Page Events Handlers
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             InkCanvas.Height = 1920;
             InkCanvas.Width = 1080;
         }
+        #endregion
 
-        private async Task Upload_Strokes()
+        #region Inkcanvas and Timers Events Handlers
+        private async void Update_Strokes(object sender, object e)
         {
-            // Retrieve storage account from connection string.
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=whiteboard01;AccountKey=z0rUBRkcznOHooMWbQ/lTJrytth6PgYsnnnTzH++AaLVd3tqe8nyinwebXW4OKfrVNfjt3726zlI6DZlQiXkoQ==");
-
-            // Create the blob client.
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
-            // Retrieve reference to a previously created container.
-            CloudBlobContainer container = blobClient.GetContainerReference("test");
-
-            // Retrieve reference to a blob named "myblob".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(UserVariables.CurrentBoard.ToString());
-
-            //// Create or overwrite the "myblob" blob with contents from a local file.
-            //    try
-            //    {
-            //    await blockBlob.DeleteAsync();
-            //        }
-            //catch
-            //    {
-
-            //    }
-
-            var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
-            var openedFile = await file.AsTask();
-            if (openedFile != null)
-            {
-                try
-                {
-                    //blockBlob.DeleteAsync();
-                    using (IRandomAccessStream stream = await openedFile.OpenAsync(FileAccessMode.ReadWrite))
-                    {
-                        await InkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-                blockBlob.UploadFromFileAsync(openedFile);
-            }
+            await Upload_Strokes();
         }
 
         private void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
@@ -193,6 +155,9 @@ namespace WhiteboardApp
             }
         }
 
+        #endregion
+
+        #region Buttons Events Handler
         private void BlueButton_Click(object sender, RoutedEventArgs e)
         {
             CloseOtherPanels("");
@@ -487,6 +452,54 @@ namespace WhiteboardApp
                 this.Frame.Navigate(typeof(WhiteboardsListPage));
             }
         }
+
+        #endregion
+
+        #region Helper Functions
+        private async Task Upload_Strokes()
+        {
+            // Retrieve storage account from connection string.
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=whiteboard01;AccountKey=z0rUBRkcznOHooMWbQ/lTJrytth6PgYsnnnTzH++AaLVd3tqe8nyinwebXW4OKfrVNfjt3726zlI6DZlQiXkoQ==");
+
+            // Create the blob client.
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = blobClient.GetContainerReference("test");
+
+            // Retrieve reference to a blob named "myblob".
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(UserVariables.CurrentBoard.ToString());
+
+            //// Create or overwrite the "myblob" blob with contents from a local file.
+            //    try
+            //    {
+            //    await blockBlob.DeleteAsync();
+            //        }
+            //catch
+            //    {
+
+            //    }
+
+            var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
+            var openedFile = await file.AsTask();
+            if (openedFile != null)
+            {
+                try
+                {
+                    //blockBlob.DeleteAsync();
+                    using (IRandomAccessStream stream = await openedFile.OpenAsync(FileAccessMode.ReadWrite))
+                    {
+                        await InkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                blockBlob.UploadFromFileAsync(openedFile);
+            }
+        }
+        #endregion
     }
 
     internal class Notifications
