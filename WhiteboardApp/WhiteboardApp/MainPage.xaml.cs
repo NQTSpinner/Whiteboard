@@ -30,56 +30,58 @@ using Microsoft.WindowsAzure.MobileServices;
 
 namespace WhiteboardApp
 {
+    public class ChatMessage
+    {
+        public string Message { get; set; }
+        public string User { get; set; }
+    }
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        bool isDouble = false;
+        string myuser = "Carmen";
         bool colourClicked = false;
         bool sizeClicked = false;
         public static ObservableCollection<string> ParticipantsCollection = new ObservableCollection<string>();
-
+        public static ObservableCollection<ChatMessage> ChatCollection = new ObservableCollection<ChatMessage>();
         public static MobileServiceClient ServiceClient;
 
-        DispatcherTimer dispatchTimer = new DispatcherTimer();
-
-        DispatcherTimer InkUpdateTimer = new DispatcherTimer();
+        DispatcherTimer dispatchTimer;
 
         //public event PropertyChangedEventHandler PropertyChanged;
-        
+
 
         public MainPage()
         {
+            ChatCollection = new ObservableCollection<ChatMessage>();
+            ChatCollection.Add(new ChatMessage { Message = "hey!", User = "Carmen" });
+            ChatCollection.Add(new ChatMessage { Message = "what's up", User = "Thai" });
+            ChatCollection.Add(new ChatMessage { Message = "yoo", User = "Adrian" });
             ParticipantsCollection = new ObservableCollection<string>();
-            ParticipantsCollection.Add(" Ann");
-            ParticipantsCollection.Add(" Marie");
-            ParticipantsCollection.Add(" Rem");
+            ParticipantsCollection.Add(" Carmen");
+            ParticipantsCollection.Add(" Thai");
+            ParticipantsCollection.Add(" Adrian");
+
             this.InitializeComponent();
 
             this.ParticipantsListBox.ItemsSource = ParticipantsCollection;
-            dispatchTimer.Interval = new TimeSpan(0, 0, 0, 3);
-            dispatchTimer.Tick += Load_Strokes;
-            dispatchTimer.Start();
-
-            InkUpdateTimer.Interval = new TimeSpan(0, 0, 0, 2);
-            InkUpdateTimer.Tick += Update_Strokes;
-
+            this.ChatListBox.ItemsSource = ChatCollection;
+            //dispatchTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+            //dispatchTimer.Tick += Update_Canvas;
+            //dispatchTimer.Start();
             //ParticipantsCollection.CollectionChanged += new PropertyChangedEventHandler(RaisePropertyChanged);
             InkCanvas.InkPresenter.StrokesCollected += Save_Strokes;
             InkCanvas.InkPresenter.StrokesErased += Erase_Strokes;
             InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
 
-        private async void Update_Strokes(object sender, object e)
-        {
-            await Upload_Strokes();
-            InkUpdateTimer.Stop();
-        }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            InkCanvas.Height = 1920;
-            InkCanvas.Width = 1080;
+            InkCanvas.Height = this.Height;
+            InkCanvas.Width = this.Width;
         }
 
         private async Task Upload_Strokes()
@@ -96,15 +98,15 @@ namespace WhiteboardApp
             // Retrieve reference to a blob named "myblob".
             CloudBlockBlob blockBlob = container.GetBlockBlobReference("newfilehah");
 
-            //// Create or overwrite the "myblob" blob with contents from a local file.
-            //try
-            //{
-            //    await blockBlob.DeleteAsync();
-            //}
-            //catch
-            //{
+            // Create or overwrite the "myblob" blob with contents from a local file.
+                try
+                {
+                await blockBlob.DeleteAsync();
+                    }
+            catch
+                {
 
-            //}
+                }
 
             var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
             var openedFile = await file.AsTask();
@@ -112,7 +114,7 @@ namespace WhiteboardApp
             {
                 try
                 {
-                    //await blockBlob.DeleteAsync();
+                    blockBlob.DeleteAsync();
                     using (IRandomAccessStream stream = await openedFile.OpenAsync(FileAccessMode.ReadWrite))
                     {
                         await InkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
@@ -126,39 +128,19 @@ namespace WhiteboardApp
             }
         }
 
-        private void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
+        private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
         {
-            dispatchTimer.Stop();
-            dispatchTimer.Start();
-
-            if (InkUpdateTimer.IsEnabled)
-            {
-                InkUpdateTimer.Stop();
-                InkUpdateTimer.Start();
-            } else
-            {
-                InkUpdateTimer.Start();
+            await Upload_Strokes();
             }
-        }
 
-        private void Save_Strokes(InkPresenter sender, InkStrokesCollectedEventArgs args)
+        private async void Save_Strokes(InkPresenter sender, InkStrokesCollectedEventArgs args)
         {
-            dispatchTimer.Stop();
-            dispatchTimer.Start();
-
-            if (InkUpdateTimer.IsEnabled)
-            {
-                InkUpdateTimer.Stop();
-                InkUpdateTimer.Start();
-            } else
-            {
-                InkUpdateTimer.Start();
-            }
+            await Upload_Strokes();
         }
 
         private async void Load_Strokes(object sender, object e)
         {
-            string URL = "http://whiteboard01.blob.core.windows.net/test/newfilehah";
+            string URL = "http://whiteboard01.blob.core.windows.net/test/test.isf";
             HttpClient httpClient = new HttpClient();
             Task<Stream> streamAsync = httpClient.GetStreamAsync(URL);
             Stream result = streamAsync.Result;
@@ -336,8 +318,9 @@ namespace WhiteboardApp
         private async void CircleButton_Click(object sender, RoutedEventArgs e)
         {
             await Upload_Strokes();
-            CloseOtherPanels("");
         }
+
+
 
         private void TextButton_Click(object sender, RoutedEventArgs e)
         {
@@ -405,7 +388,44 @@ namespace WhiteboardApp
             IMobileServiceTable<Notifications> messageTable = ServiceClient.GetTable<Notifications>();
             await messageTable.InsertAsync(new Notifications() { Text = "Notification button clicked" });
         }
+
+        private void ChatTab_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.HiddenChatPanel.Visibility == Visibility.Visible)
+            {
+                this.HiddenChatPanel.Visibility = Visibility.Collapsed;
             }
+            else
+            {
+                this.HiddenChatPanel.Visibility = Visibility.Visible;
+                ChatTextBox.Focus(FocusState.Pointer);
+            }
+        }
+
+        private void SendMessageButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChatCollection.Add(new ChatMessage { User = myuser, Message = ChatTextBox.Text });
+            ChatListBox.ItemsSource = ChatCollection;
+            ChatTextBox.Text = "";
+            ChatTextBox.Focus(FocusState.Pointer);
+        }
+
+        private void ChatTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter && !isDouble)
+            {
+                ChatCollection.Add(new ChatMessage { User = myuser, Message = ChatTextBox.Text });
+                ChatListBox.ItemsSource = ChatCollection;
+                ChatTextBox.Text = "";
+                isDouble = true;
+                ChatTextBox.Focus(FocusState.Pointer);
+            }
+            else
+            {
+                isDouble = false;
+            }
+        }
+    }
 
     internal class Notifications
     {
