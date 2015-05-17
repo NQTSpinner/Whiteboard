@@ -21,9 +21,14 @@
                         <Button x:Name="FriendsButton" Content=" Friends" Width="150" Height="35" Margin="0,0,0,0" Background="Gray" HorizontalContentAlignment="Left"/>
                         <Button x:Name="WhiteboardsButton" Content=" My Whiteboards" Width="150" Height="35" Margin="0,0,0,0" Background="Gray" HorizontalContentAlignment="Left"/>
                         <Button x:Name="SignOutButton" Content=" Sign Out" Height="35" Width="150" Margin="0,0,0,0" Tapped="SignOutButton_Tapped" Background="Gray" HorizontalContentAlignment="Left"/>
-                        <Button x:Name="ParticipantsButton" Content=" View Participants" Height="35" Width="150" Margin="0,15,0,0" Tapped="ParticipantsButton_Tapped" Background="Gray" HorizontalContentAlignment="Left"/>
-                        <ListBox x:Name="ParticipantsListBox" Visibility="Collapsed">
-                            <ListBoxItem Content="HELLO" />
+                        <Button x:Name="ParticipantsButton" Content=" View Participants" Height="35" Width="150" Margin="0,15,0,0" Click="ParticipantsButton_Tapped" Background="Gray" HorizontalContentAlignment="Left"/>
+                        <ListBox x:Name="ParticipantsListBox" Background="Red" ItemsSource="{Binding}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBoxItem>HEYTHERER</ListBoxItem>
                         </ListBox>
                         
                     </StackPanel>
@@ -125,9 +130,9 @@
                     </Button>
                 </StackPanel>
                 
-                <Grid x:Name="ParticipantsGrid" Margin="1050,7500,0,0" Height="50" Width="100" Background="Gray">
+                <!--<Grid x:Name="ParticipantsGrid" Margin="1050,7500,0,0" Height="50" Width="100" Background="Gray">
                     <TextBlock x:Name="ParticipantsTab" Visibility="Visible" Width="100" Height="50" VerticalAlignment="Bottom" Text="7 Participants" TextAlignment="Center" Margin="0,5,0,0"/>
-                    <!--//when blick on the textblock or grid, collapse textblock and make listbox visible, and change grid margin and height to match listbox height-->
+                    --><!--//when blick on the textblock or grid, collapse textblock and make listbox visible, and change grid margin and height to match listbox height--><!--
                     <ListBox x:Name="ParticipantsList" Visibility="Collapsed" Width="100" VerticalAlignment="Bottom">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -136,9 +141,9 @@
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                        <!--//bind listbox items-->
+                        --><!--//bind listbox items--><!--
                     </ListBox>
-                </Grid>
+                </Grid>-->
                 
             </Grid>
         </SplitView>

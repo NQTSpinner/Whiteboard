@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -21,25 +23,31 @@ using Windows.UI.Xaml.Navigation;
 
 namespace WhiteboardApp
 {
-    public class ParticipantInfo
-    {
-        public string ParticipantName { get; set; }
-    }
-
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        List<ParticipantInfo> participantsCollection = new List<ParticipantInfo>();
+        public static ObservableCollection<string> ParticipantsCollection = new ObservableCollection<string>();
+
         DispatcherTimer dispatchTimer;
+
+        //public event PropertyChangedEventHandler PropertyChanged;
+        
+
         public MainPage()
         {
+            ParticipantsCollection = new ObservableCollection<string>();
+            ParticipantsCollection.Add(" Ann");
+            ParticipantsCollection.Add(" Marie");
+            ParticipantsCollection.Add(" Rem");
             this.InitializeComponent();
+
+            this.ParticipantsListBox.ItemsSource = ParticipantsCollection;
             //dispatchTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             //dispatchTimer.Tick += Update_Canvas;
             //dispatchTimer.Start();
-
+            //ParticipantsCollection.CollectionChanged += new PropertyChangedEventHandler(RaisePropertyChanged);
             InkCanvas.InkPresenter.StrokesCollected += Save_Strokes;
             InkCanvas.InkPresenter.StrokesErased += Erase_Strokes;
             InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
@@ -281,7 +289,7 @@ namespace WhiteboardApp
             }
         }
 
-        private void ParticipantsButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void ParticipantsButton_Tapped(object sender, RoutedEventArgs e)
         {
             if (this.ParticipantsListBox.Visibility.Equals(Visibility.Visible))
             {
@@ -289,12 +297,6 @@ namespace WhiteboardApp
             }
             else //http://www.softwareandfinance.com/VSNET_40/ListBoxBinding.html
             {
-                participantsCollection.Clear();
-                participantsCollection.Add(new ParticipantInfo() { ParticipantName = "Ann" });
-                participantsCollection.Add(new ParticipantInfo() { ParticipantName = "Marie" });
-                participantsCollection.Add(new ParticipantInfo() { ParticipantName = "Ren" });
-                ParticipantsListBox.ItemsSource = participantsCollection;
-
                 this.ParticipantsListBox.Visibility = Visibility.Visible;
             }
         }

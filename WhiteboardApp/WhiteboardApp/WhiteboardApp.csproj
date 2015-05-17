@@ -125,6 +125,8 @@
     <Content Include="Images\orange.png" />
     <Content Include="Images\purple.png" />
     <Content Include="Images\red.png" />
+    <Content Include="Images\scrumboard.png" />
+    <Content Include="Images\scrumboardbanner.png" />
     <Content Include="Images\smallbrush.png" />
     <Content Include="Images\square.png" />
     <Content Include="Images\text.png" />
