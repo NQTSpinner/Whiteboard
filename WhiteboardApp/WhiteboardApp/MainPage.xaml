@@ -27,7 +27,7 @@
 
 
             <Grid>
-                <InkCanvas x:Name="InkCanvas"/>
+                <InkCanvas x:Name="InkCanvas" />
                 <StackPanel HorizontalAlignment="Left" Width="50" Orientation="Vertical">
                     <Image x:Name="OpenMenuButton" Source="Images/user.png" Height="50" Tapped="OpenMenuButton_Tapped" />
                     <Button x:Name="ColourButton" Height="50" Width="50" Click="OpenColourButton_Tapped" >
@@ -65,6 +65,7 @@
                             <ImageBrush ImageSource="Images/finger.png" />
                         </ToggleButton.Background>
                     </ToggleButton>
+                    <Button Click="PushNotificationButton_Click" />
                 </StackPanel>
                 <StackPanel x:Name="ColourPanel" Margin="50,50,0,0" Width="50" HorizontalAlignment="Left" Visibility="Collapsed">
                     <Button x:Name="RedButton" Height="50" Width="50" Click="RedButton_Click" >

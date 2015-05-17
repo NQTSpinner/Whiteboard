@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,11 +20,32 @@ using Windows.UI.Xaml.Navigation;
 
 namespace WhiteboardApp
 {
+
+    //class MobileServiceTable
+    //{
+    //    public MobileServiceClient WhiteboardCloudClient;
+
+    //    public MobileServiceTable(MobileServiceClient client)
+    //    {
+    //        WhiteboardCloudClient = client;
+    //    }
+
+    //    IMobileServiceTable<Notifications> getMessageTable()
+    //    {
+    //        return WhiteboardCloudClient.GetTable<Notifications>();
+    //    }
+
+    //}
+
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     sealed partial class App : Application
     {
+        public static Microsoft.WindowsAzure.MobileServices.MobileServiceClient WhiteboardCloudClient = new Microsoft.WindowsAzure.MobileServices.MobileServiceClient(
+                            "https://whiteboardservice.azure-mobile.net/",
+                            "uTfHxlptlSyUyLpOynOQjQGBygxOoD30");
+
         /// <summary>
         /// Allows tracking page views, exceptions and other telemetry through the Microsoft Application Insights service.
         /// </summary>
@@ -39,6 +61,7 @@ namespace WhiteboardApp
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            MainPage.MobileServiceClient = WhiteboardCloudClient;
         }
 
         /// <summary>
@@ -85,6 +108,8 @@ namespace WhiteboardApp
             }
             // Ensure the current window is active
             Window.Current.Activate();
+
+            whiteboardservicePush.UploadChannel();
         }
 
         /// <summary>

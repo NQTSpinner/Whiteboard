@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,11 +22,13 @@ using Windows.UI.Xaml.Navigation;
 
 namespace WhiteboardApp
 {
+    
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public static Microsoft.WindowsAzure.MobileServices.MobileServiceClient MobileServiceClient;
         DispatcherTimer dispatchTimer;
         public MainPage()
         {
@@ -262,5 +265,21 @@ namespace WhiteboardApp
                 this.Frame.Navigate(typeof(LoginPage));
             }
         }
+
+        private async void PushNotificationButton_Click(object sender, RoutedEventArgs e)
+        {
+            IMobileServiceTable<Notifications> messageTable = MobileServiceClient.GetTable<Notifications>();
+            await messageTable.InsertAsync(new Notifications() { Text = "Notification button clicked" });
+        }
+    }
+
+    internal class Notifications
+    {
+        public Notifications()
+        {
+        }
+
+        public string Text { get; set; }
+        public string id { get; set; }
     }
 }

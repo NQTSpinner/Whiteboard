@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="e071566e-2308-41a4-bdb4-46d7b023c434"
-    Publisher="CN=thaiq"
+    Name="52141QuocThai.ScrumBoard"
+    Publisher="CN=28379DD1-73FB-43AA-A917-1FC264021ABD"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="e071566e-2308-41a4-bdb4-46d7b023c434" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>WhiteboardApp</DisplayName>
-    <PublisherDisplayName>thaiq</PublisherDisplayName>
+    <DisplayName>ScrumBoard</DisplayName>
+    <PublisherDisplayName>QuocThai</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -36,7 +36,8 @@
         Square150x150Logo="Assets\Logo.png"
         Square44x44Logo="Assets\SmallLogo.png"
         Description="WhiteboardApp"
-        BackgroundColor="#464646">
+        BackgroundColor="#464646"
+        ToastCapable="true">
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
