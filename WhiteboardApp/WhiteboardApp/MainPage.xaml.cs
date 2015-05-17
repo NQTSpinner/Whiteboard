@@ -254,5 +254,13 @@ namespace WhiteboardApp
         {
             InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
+
+        private void SignOutButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (this.Frame != null)
+            {
+                this.Frame.Navigate(typeof(LoginPage));
+            }
+        }
     }
 }
