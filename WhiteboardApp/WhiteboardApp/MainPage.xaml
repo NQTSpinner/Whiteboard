@@ -49,7 +49,7 @@
                             <ImageBrush ImageSource="Images/brush.png"/>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="SquareButton" Height="50" Width="50" Click="SquareButton_Click" >
+                    <Button x:Name="SquareButton" Height="50" Width="50" Click="Load_Strokes" >
                         <Button.Background>
                             <ImageBrush ImageSource="Images/square.png"/>
                         </Button.Background>
