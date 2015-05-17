@@ -27,6 +27,7 @@ namespace WhiteboardApp
     /// </summary>
     public sealed partial class LoginPage : Page
     {
+        bool isDouble = false;
         string password;
         string defaultText = "Username or email";
         private string URL = "107.170.241.204/api/authenticate?user=[username]&pass=[pass]";
@@ -103,5 +104,48 @@ namespace WhiteboardApp
                 PasswordBox.Visibility = Visibility.Visible;
             }
         }
+
+        private async void PasswordBoxHidden_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter && !isDouble)
+            {
+                URL = "http://107.170.241.204/api/authenticate?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
+                HttpClient client = new HttpClient();
+                string a = await client.GetStringAsync(URL);
+                a = a.Substring(18, a.Length - 18 - 1);
+                if (String.Compare(a, "true") == 0)
+                {
+                    if (this.Frame != null)
+                    {
+                        this.Frame.Navigate(typeof(MainPage));
+                    }
+                }
+                else if (String.Compare(a, "\"User Doesnt Exist\"") == 0)
+                {
+                    URL = "http://107.170.241.204/api/createAccount?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
+                    HttpClient clientB = new HttpClient();
+                    string b = await client.GetStringAsync(URL);
+                    b = b.Substring(14, b.Length - 14 - 1);
+                    if (String.Compare(b, "true") == 0)
+                    {
+                        LoginMessageBlock.Text = "User account created, please sign in.";
+                    }
+                    else
+                    {
+                        LoginMessageBlock.Text = "Unable to create new account.";
+                    }
+                }
+                else
+                {
+                    LoginMessageBlock.Text = "Incorrect password";
+                }
+                isDouble = true;
+            }
+            else
+            {
+                isDouble = false;
+            }
+        }
+    
     }
 }
