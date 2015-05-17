@@ -73,6 +73,7 @@ namespace WhiteboardApp
 
             this.ParticipantsListBox.ItemsSource = ParticipantsCollection;
             this.ChatListBox.ItemsSource = ChatCollection;
+
             dispatchTimer.Interval = new TimeSpan(0, 0, 3);
             dispatchTimer.Tick += Load_Strokes;
             dispatchTimer.Start();
@@ -88,10 +89,11 @@ namespace WhiteboardApp
         #endregion
 
         #region Page Events Handlers
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             InkCanvas.Height = 1920;
             InkCanvas.Width = 1080;
+            await Download_Strokes();
         }
         #endregion
 
@@ -133,21 +135,21 @@ namespace WhiteboardApp
             }
         }
 
-        private async void Load_Strokes(object sender, object e)
+        private async Task Download_Strokes()
         {
-            string URL = "http://whiteboard01.blob.core.windows.net/test/"+UserVariables.CurrentBoard;
+            string URL = "http://whiteboard01.blob.core.windows.net/test/" + UserVariables.CurrentBoard;
             HttpClient httpClient = new HttpClient();
-            Task<Stream> streamAsync = httpClient.GetStreamAsync(URL);
-            Stream result = streamAsync.Result;
-            if (result != null)
+            Stream streamAsync = await httpClient.GetStreamAsync(URL);
+
+            if (streamAsync != null)
             {
-                Windows.Storage.Streams.IInputStream inStream = result.AsInputStream();
+                Windows.Storage.Streams.IInputStream inStream = streamAsync.AsInputStream();
 
                 using (inStream)
                 {
                     try
                     {
-                        InkCanvas.InkPresenter.StrokeContainer.LoadAsync(inStream);
+                        await InkCanvas.InkPresenter.StrokeContainer.LoadAsync(inStream);
                     }
                     catch (Exception ex)
                     {
@@ -156,7 +158,11 @@ namespace WhiteboardApp
 
                 }
             }
-            
+        }
+
+        private async void Load_Strokes(object sender, object e)
+        {
+            await Download_Strokes();
         }
 
         #endregion
@@ -473,24 +479,13 @@ namespace WhiteboardApp
 
             // Retrieve reference to a blob named "myblob".
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(UserVariables.CurrentBoard);
-
-            //// Create or overwrite the "myblob" blob with contents from a local file.
-            //    try
-            //    {
-            //    await blockBlob.DeleteAsync();
-            //        }
-            //catch
-            //    {
-
-            //    }
-
+            
             var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
             var openedFile = await file.AsTask();
             if (openedFile != null)
             {
                 try
                 {
-                    //blockBlob.DeleteAsync();
                     using (IRandomAccessStream stream = await openedFile.OpenAsync(FileAccessMode.ReadWrite))
                     {
                         await InkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
