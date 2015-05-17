@@ -137,11 +137,11 @@ namespace WhiteboardApp
         {
             string URL = "http://whiteboard01.blob.core.windows.net/test/"+UserVariables.CurrentBoard;
             HttpClient httpClient = new HttpClient();
-            Task<Stream> streamAsync = httpClient.GetStreamAsync(URL);
-            Stream result = streamAsync.Result;
-            if (result != null)
+            var streamAsync = await httpClient.GetStreamAsync(URL);
+            
+            if (streamAsync != null)
             {
-                Windows.Storage.Streams.IInputStream inStream = result.AsInputStream();
+                Windows.Storage.Streams.IInputStream inStream = streamAsync.AsInputStream();
 
                 using (inStream)
                 {
@@ -347,7 +347,7 @@ namespace WhiteboardApp
 
         private void SquareButton_Click(object sender, RoutedEventArgs e)
         {
-            CloseOtherPanels("");
+            Load_Strokes(sender, e);
         }
 
         private async void CircleButton_Click(object sender, RoutedEventArgs e)
