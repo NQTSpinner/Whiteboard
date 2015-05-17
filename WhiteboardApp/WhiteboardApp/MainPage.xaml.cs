@@ -24,6 +24,7 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.MobileServices;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -40,7 +41,9 @@ namespace WhiteboardApp
 
         public static MobileServiceClient ServiceClient;
 
-        DispatcherTimer dispatchTimer;
+        DispatcherTimer dispatchTimer = new DispatcherTimer();
+
+        DispatcherTimer InkUpdateTimer = new DispatcherTimer();
 
         //public event PropertyChangedEventHandler PropertyChanged;
         
@@ -54,20 +57,29 @@ namespace WhiteboardApp
             this.InitializeComponent();
 
             this.ParticipantsListBox.ItemsSource = ParticipantsCollection;
-            //dispatchTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
-            //dispatchTimer.Tick += Update_Canvas;
-            //dispatchTimer.Start();
+            dispatchTimer.Interval = new TimeSpan(0, 0, 0, 3);
+            dispatchTimer.Tick += Load_Strokes;
+            dispatchTimer.Start();
+
+            InkUpdateTimer.Interval = new TimeSpan(0, 0, 0, 2);
+            InkUpdateTimer.Tick += Update_Strokes;
+
             //ParticipantsCollection.CollectionChanged += new PropertyChangedEventHandler(RaisePropertyChanged);
             InkCanvas.InkPresenter.StrokesCollected += Save_Strokes;
             InkCanvas.InkPresenter.StrokesErased += Erase_Strokes;
             InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
 
+        private async void Update_Strokes(object sender, object e)
+        {
+            await Upload_Strokes();
+            InkUpdateTimer.Stop();
+        }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            InkCanvas.Height = this.Height;
-            InkCanvas.Width = this.Width;
+            InkCanvas.Height = 1920;
+            InkCanvas.Width = 1080;
         }
 
         private async Task Upload_Strokes()
@@ -84,15 +96,15 @@ namespace WhiteboardApp
             // Retrieve reference to a blob named "myblob".
             CloudBlockBlob blockBlob = container.GetBlockBlobReference("newfilehah");
 
-            // Create or overwrite the "myblob" blob with contents from a local file.
-                try
-                {
-                await blockBlob.DeleteAsync();
-                    }
-            catch
-                {
+            //// Create or overwrite the "myblob" blob with contents from a local file.
+            //try
+            //{
+            //    await blockBlob.DeleteAsync();
+            //}
+            //catch
+            //{
 
-                }
+            //}
 
             var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
             var openedFile = await file.AsTask();
@@ -100,7 +112,7 @@ namespace WhiteboardApp
             {
                 try
                 {
-                    blockBlob.DeleteAsync();
+                    //await blockBlob.DeleteAsync();
                     using (IRandomAccessStream stream = await openedFile.OpenAsync(FileAccessMode.ReadWrite))
                     {
                         await InkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
@@ -114,19 +126,39 @@ namespace WhiteboardApp
             }
         }
 
-        private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
+        private void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
         {
-            await Upload_Strokes();
-            }
+            dispatchTimer.Stop();
+            dispatchTimer.Start();
 
-        private async void Save_Strokes(InkPresenter sender, InkStrokesCollectedEventArgs args)
+            if (InkUpdateTimer.IsEnabled)
+            {
+                InkUpdateTimer.Stop();
+                InkUpdateTimer.Start();
+            } else
+            {
+                InkUpdateTimer.Start();
+            }
+        }
+
+        private void Save_Strokes(InkPresenter sender, InkStrokesCollectedEventArgs args)
         {
-            await Upload_Strokes();
+            dispatchTimer.Stop();
+            dispatchTimer.Start();
+
+            if (InkUpdateTimer.IsEnabled)
+            {
+                InkUpdateTimer.Stop();
+                InkUpdateTimer.Start();
+            } else
+            {
+                InkUpdateTimer.Start();
+            }
         }
 
         private async void Load_Strokes(object sender, object e)
         {
-            string URL = "http://whiteboard01.blob.core.windows.net/test/test.isf";
+            string URL = "http://whiteboard01.blob.core.windows.net/test/newfilehah";
             HttpClient httpClient = new HttpClient();
             Task<Stream> streamAsync = httpClient.GetStreamAsync(URL);
             Stream result = streamAsync.Result;
