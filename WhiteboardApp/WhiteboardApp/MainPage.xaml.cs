@@ -40,6 +40,8 @@ namespace WhiteboardApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        bool eraserModeToggle = false;
+        bool fingerModeToggle = false;
         bool isDouble = false;
         string myuser = "Carmen";
         bool colourClicked = false;
@@ -133,7 +135,7 @@ namespace WhiteboardApp
                 {
                     throw ex;
                 }
-                await blockBlob.UploadFromFileAsync(openedFile);
+                blockBlob.UploadFromFileAsync(openedFile);
             }
         }
 
@@ -181,7 +183,7 @@ namespace WhiteboardApp
             {
                 try
                 {
-                    await InkCanvas.InkPresenter.StrokeContainer.LoadAsync(inStream);
+                    InkCanvas.InkPresenter.StrokeContainer.LoadAsync(inStream);
                 }
                 catch(Exception ex)
                 {
@@ -289,14 +291,47 @@ namespace WhiteboardApp
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
         }
 
-        private void EraserButton_Checked(object sender, RoutedEventArgs e)
+        private void EraserButton_Click(object sender, RoutedEventArgs e)
         {
-            InkCanvas.InkPresenter.InputProcessingConfiguration.Mode = InkInputProcessingMode.Erasing;
+            if (!eraserModeToggle) {
+                CloseOtherPanels("");
+                var brush = new ImageBrush();
+                brush.ImageSource = new BitmapImage(new Uri("ms-appx:/Images/pen.png"));
+                this.EraserButton.Background = brush;
+                InkCanvas.InkPresenter.InputProcessingConfiguration.Mode = InkInputProcessingMode.Erasing;
+                eraserModeToggle = true;
+            }
+            else
+            {
+                CloseOtherPanels("");
+                var brush = new ImageBrush();
+                brush.ImageSource = new BitmapImage(new Uri("ms-appx:/Images/eraser.png"));
+                this.EraserButton.Background = brush;
+                InkCanvas.InkPresenter.InputProcessingConfiguration.Mode = InkInputProcessingMode.Inking;
+                eraserModeToggle = false;
+            }
         }
 
-        private void EraserButton_Unchecked(object sender, RoutedEventArgs e)
+        private void FingerDrawButton_Click(object sender, RoutedEventArgs e)
         {
-            InkCanvas.InkPresenter.InputProcessingConfiguration.Mode = InkInputProcessingMode.Inking;
+            if (!fingerModeToggle)
+            {
+                CloseOtherPanels("");
+                var brush = new ImageBrush();
+                brush.ImageSource = new BitmapImage(new Uri("ms-appx:/Images/fingerselect.png"));
+                this.FingerDrawButton.Background = brush;
+                InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Touch | Windows.UI.Core.CoreInputDeviceTypes.Pen;
+                fingerModeToggle = true;
+            }
+            else
+            {
+                CloseOtherPanels("");
+                var brush = new ImageBrush();
+                brush.ImageSource = new BitmapImage(new Uri("ms-appx:/Images/finger.png"));
+                this.FingerDrawButton.Background = brush;
+                InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
+                fingerModeToggle = false;
+            }
         }
 
         private void OpenMenuButton_Tapped(object sender, TappedRoutedEventArgs e)
@@ -356,18 +391,6 @@ namespace WhiteboardApp
         private void TextButton_Click(object sender, RoutedEventArgs e)
         {
             CloseOtherPanels("");
-        }
-
-        private void FingerDrawButton_Checked(object sender, RoutedEventArgs e)
-        {
-            CloseOtherPanels("");
-            InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Touch | Windows.UI.Core.CoreInputDeviceTypes.Pen;
-        }
-
-        private void FingerDrawButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            CloseOtherPanels("");
-            InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
 
         private void SignOutButton_Tapped(object sender, TappedRoutedEventArgs e)

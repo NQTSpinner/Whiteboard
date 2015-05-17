@@ -13,18 +13,18 @@
             <SplitView x:Name="SplitView" DisplayMode="Overlay" OpenPaneLength="150" PanePlacement="Left" IsPaneOpen="False">
                 <!--Pane-->
                 <SplitView.Pane>
-                    <StackPanel Orientation="Vertical" Background="Gray">
+                    <StackPanel Orientation="Vertical" Background="Lavender">
                         <StackPanel Orientation="Horizontal">
                             <Image x:Name="UserDP" Source="Images/user.png" Height="50" Width="50"/>
                             <!--leave this icon outside so that when you tap it it opens up the window but stays on top (aka the pane moves out from behind it)-->
                             <TextBlock x:Name="UserName" Text="Carmen" VerticalAlignment="Bottom" Margin="5,0,0,8"/>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Margin="0,10,0,0">
-                            <Button x:Name="FriendsButton" Content="Friends" Width="150" Height="35" Margin="0,0,0,0" Background="Gray" HorizontalContentAlignment="Left"/>
-                            <Button x:Name="WhiteboardsButton" Content="My Whiteboards" Width="150" Height="35" Margin="0,0,0,0" Background="Gray" HorizontalContentAlignment="Left"/>
-                            <Button x:Name="SignOutButton" Content="Sign Out" Height="35" Width="150" Margin="0,0,0,0" Tapped="SignOutButton_Tapped" Background="Gray" HorizontalContentAlignment="Left"/>
-                            <Button x:Name="ParticipantsButton" Content="View Participants" Height="35" Width="150" Margin="0,15,0,0" Click="ParticipantsButton_Tapped" Background="Gray" HorizontalContentAlignment="Left"/>
-                            <ListBox x:Name="ParticipantsListBox" Background="Gray" ItemsSource="{Binding}">
+                            <Button x:Name="FriendsButton" Content="Friends" Width="150" Height="35" Margin="0,0,0,0" Background="Lavender" HorizontalContentAlignment="Left"/>
+                            <Button x:Name="WhiteboardsButton" Content="My Whiteboards" Width="150" Height="35" Margin="0,0,0,0" Background="Lavender" HorizontalContentAlignment="Left"/>
+                            <Button x:Name="SignOutButton" Content="Sign Out" Height="35" Width="150" Margin="0,0,0,0" Tapped="SignOutButton_Tapped" Background="Lavender" HorizontalContentAlignment="Left"/>
+                            <Button x:Name="ParticipantsButton" Content="View Participants" Height="35" Width="150" Margin="0,15,0,0" Click="ParticipantsButton_Tapped" Background="Lavender" HorizontalContentAlignment="Left"/>
+                            <ListBox x:Name="ParticipantsListBox" Background="Lavender" ItemsSource="{Binding}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding}" Margin="2,0,0,0"/>
@@ -64,21 +64,21 @@
                             <ImageBrush ImageSource="Images/circle.png"/>
                         </Button.Background>
                     </Button>
-                    <ToggleButton x:Name="EraserButton" Height="50" Width="50" Checked="EraserButton_Checked" Unchecked="EraserButton_Unchecked">
-                        <ToggleButton.Background>
+                    <Button x:Name="EraserButton" Height="50" Width="50" Click="EraserButton_Click">
+                        <Button.Background>
                             <ImageBrush ImageSource="Images/eraser.png"/>
-                        </ToggleButton.Background>
-                    </ToggleButton>
+                        </Button.Background>
+                    </Button>
                     <Button x:Name="TextButton" Height="50" Width="50" Click="TextButton_Click" >
                         <Button.Background>
                             <ImageBrush ImageSource="Images/text.png"/>
                         </Button.Background>
                     </Button>
-                    <ToggleButton  x:Name="FingerDrawButton" Height="50" Width="50" Checked="FingerDrawButton_Checked" Unchecked="FingerDrawButton_Unchecked" >
-                        <ToggleButton.Background>
+                    <Button  x:Name="FingerDrawButton" Height="50" Width="50" Click="FingerDrawButton_Click" >
+                        <Button.Background>
                             <ImageBrush ImageSource="Images/finger.png" />
-                        </ToggleButton.Background>
-                    </ToggleButton>
+                        </Button.Background>
+                    </Button>
                 </StackPanel>
                 <StackPanel x:Name="ColourPanel" Margin="50,50,0,0" Width="50" HorizontalAlignment="Left" Visibility="Collapsed" PointerExited="ColourPanel_PointerExited">
                     <Button x:Name="RedButton" Height="50" Width="50" Click="RedButton_Click" >
@@ -120,28 +120,28 @@
                 <StackPanel x:Name="SizePanel" Margin="50,100,0,0" Width="50" HorizontalAlignment="Left" Visibility="Collapsed" PointerExited="SizePanel_PointerExited">
                     <Button x:Name="ThickButton" Height="50" Width="50" Click="Thick_Stroke_Button_Click" >
                         <Button.Background>
-                            <ImageBrush ImageSource="Images/largebrush.png"/>
+                            <ImageBrush ImageSource="Images/largebrush2.png"/>
                         </Button.Background>
                     </Button>
                     <Button x:Name="MedButton" Height="50" Width="50" Click="Medium_Stroke_Button_Click" >
                         <Button.Background>
-                            <ImageBrush ImageSource="Images/medbrush.png"/>
+                            <ImageBrush ImageSource="Images/medbrush2.png"/>
                         </Button.Background>
                     </Button>
                     <Button x:Name="ThinButton" Height="50" Width="50" Click="Thin_Stroke_Button_Click" >
                         <Button.Background>
-                            <ImageBrush ImageSource="Images/smallbrush.png"/>
+                            <ImageBrush ImageSource="Images/smallbrush2.png"/>
                         </Button.Background>
                     </Button>
                 </StackPanel>
 
-                <StackPanel x:Name="ChatGrid" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Background="Gray">
-                    <Button x:Name="ChatTab" Click="ChatTab_Click" Width="150" Height="40" VerticalAlignment="Bottom" Content="3 Participants"/>
+                <StackPanel x:Name="ChatGrid" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Background="Lavender">
+                    <Button x:Name="ChatTab" Click="ChatTab_Click" Width="150" Height="40" VerticalAlignment="Bottom" Background="Lavender" Content="3 Participants"/>
                     
                 <!--//when blick on the textblock or grid, collapse textblock and make listbox visible, and change grid margin and height to match listbox height-->
                     <StackPanel x:Name="HiddenChatPanel" Visibility="Collapsed">
                         <ScrollViewer x:Name="ChatScrollViewer" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled">
-                        <ListBox x:Name="ChatListBox" Width="150" Height="500" VerticalAlignment="Bottom" ItemsSource="{Binding}">
+                        <ListBox x:Name="ChatListBox" Width="150" Height="500" Background="LightBlue" VerticalAlignment="Bottom" ItemsSource="{Binding}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Margin="0,-2,0,-2">
