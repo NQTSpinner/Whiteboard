@@ -336,9 +336,8 @@ namespace WhiteboardApp
         private async void CircleButton_Click(object sender, RoutedEventArgs e)
         {
             await Upload_Strokes();
+            CloseOtherPanels("");
         }
-
-
 
         private void TextButton_Click(object sender, RoutedEventArgs e)
         {
