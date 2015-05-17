@@ -479,6 +479,14 @@ namespace WhiteboardApp
                 isDouble = false;
             }
         }
+
+        private void WhiteboardsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Frame != null)
+            {
+                this.Frame.Navigate(typeof(WhiteboardsListPage));
+            }
+        }
     }
 
     internal class Notifications

@@ -117,7 +117,7 @@ namespace WhiteboardApp
                 {
                     if (this.Frame != null)
                     {
-                        this.Frame.Navigate(typeof(MainPage));
+                        this.Frame.Navigate(typeof(WhiteboardsListPage));
                     }
                 }
                 else if (String.Compare(a, "\"User Doesnt Exist\"") == 0)
