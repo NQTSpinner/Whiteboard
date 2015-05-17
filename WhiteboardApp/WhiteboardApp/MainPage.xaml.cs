@@ -21,11 +21,17 @@ using Windows.UI.Xaml.Navigation;
 
 namespace WhiteboardApp
 {
+    public class ParticipantInfo
+    {
+        public string ParticipantName { get; set; }
+    }
+
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        List<ParticipantInfo> participantsCollection = new List<ParticipantInfo>();
         DispatcherTimer dispatchTimer;
         public MainPage()
         {
@@ -101,6 +107,7 @@ namespace WhiteboardApp
 
         private void BlueButton_Click(object sender, RoutedEventArgs e)
         {
+            CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 0, 0, 255);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
@@ -109,6 +116,7 @@ namespace WhiteboardApp
 
         private void GreenButton_Click(object sender, RoutedEventArgs e)
         {
+            CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 0, 255, 0);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
@@ -117,6 +125,7 @@ namespace WhiteboardApp
 
         private void RedButton_Click(object sender, RoutedEventArgs e)
         {
+            CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 255, 0, 0);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
@@ -125,6 +134,7 @@ namespace WhiteboardApp
 
         private void PurpleButton_Click(object sender, RoutedEventArgs e)
         {
+            CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 138, 43, 236); // TO DOOO!!!
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
@@ -133,6 +143,7 @@ namespace WhiteboardApp
 
         private void OrangeButton_Click(object sender, RoutedEventArgs e)
         {
+            CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 255, 140, 0); // TO DOOO!!!!
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
@@ -141,6 +152,7 @@ namespace WhiteboardApp
 
         private void YellowButton_Click(object sender, RoutedEventArgs e)
         {
+            CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 255, 255, 0); //TO DO !!!!
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
@@ -149,6 +161,7 @@ namespace WhiteboardApp
 
         private void BlackButton_Click(object sender, RoutedEventArgs e)
         {
+            CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Color = Windows.UI.Color.FromArgb(0, 0, 0, 0);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
@@ -164,6 +177,7 @@ namespace WhiteboardApp
 
         private void Thin_Stroke_Button_Click(object sender, RoutedEventArgs e)
         {
+            CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Size = new Size(5, 5);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
@@ -171,6 +185,7 @@ namespace WhiteboardApp
 
         private void Medium_Stroke_Button_Click(object sender, RoutedEventArgs e)
         {
+            CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Size = new Size(10, 10);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
@@ -178,6 +193,7 @@ namespace WhiteboardApp
 
         private void Thick_Stroke_Button_Click(object sender, RoutedEventArgs e)
         {
+            CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Size = new Size(20, 20);
             InkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttributes);
@@ -232,26 +248,28 @@ namespace WhiteboardApp
 
         private void SquareButton_Click(object sender, RoutedEventArgs e)
         {
-
+            CloseOtherPanels("");
         }
 
         private void CircleButton_Click(object sender, RoutedEventArgs e)
         {
-
+            CloseOtherPanels("");
         }
 
         private void TextButton_Click(object sender, RoutedEventArgs e)
         {
-
+            CloseOtherPanels("");
         }
 
         private void FingerDrawButton_Checked(object sender, RoutedEventArgs e)
         {
+            CloseOtherPanels("");
             InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Touch | Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
 
         private void FingerDrawButton_Unchecked(object sender, RoutedEventArgs e)
         {
+            CloseOtherPanels("");
             InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
 
@@ -260,6 +278,24 @@ namespace WhiteboardApp
             if (this.Frame != null)
             {
                 this.Frame.Navigate(typeof(LoginPage));
+            }
+        }
+
+        private void ParticipantsButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (this.ParticipantsListBox.Visibility.Equals(Visibility.Visible))
+            {
+                this.ParticipantsListBox.Visibility = Visibility.Collapsed;
+            }
+            else //http://www.softwareandfinance.com/VSNET_40/ListBoxBinding.html
+            {
+                participantsCollection.Clear();
+                participantsCollection.Add(new ParticipantInfo() { ParticipantName = "Ann" });
+                participantsCollection.Add(new ParticipantInfo() { ParticipantName = "Marie" });
+                participantsCollection.Add(new ParticipantInfo() { ParticipantName = "Ren" });
+                ParticipantsListBox.ItemsSource = participantsCollection;
+
+                this.ParticipantsListBox.Visibility = Visibility.Visible;
             }
         }
     }

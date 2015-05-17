@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <SplitView x:Name="SplitView" DisplayMode="Overlay" OpenPaneLength="150" PanePlacement="Left" IsPaneOpen="True">
+        <SplitView x:Name="SplitView" DisplayMode="Overlay" OpenPaneLength="150" PanePlacement="Left" IsPaneOpen="False">
             <!--Pane-->
             <SplitView.Pane>
                 <StackPanel Orientation="Vertical" Background="Gray">
@@ -17,14 +17,18 @@
                         <!--leave this icon outside so that when you tap it it opens up the window but stays on top (aka the pane moves out from behind it)-->
                         <TextBlock x:Name="UserName" Text="Carmen" VerticalAlignment="Bottom" Margin="5,0,0,8"/>
                     </StackPanel>
-                    <StackPanel Orientation="Vertical" Margin="5,0,0,0">
-                        <TextBlock x:Name="FriendsButton" Text="Friends" Margin="5,5,0,0"/>
-                        <TextBlock x:Name="WhiteboardsButton" Text="My Whiteboards" Margin="5,5,0,0"/>
-                        <TextBlock x:Name="SignOutButton" Text="Sign Out" Margin="5,5,0,0" Tapped="SignOutButton_Tapped"/>
+                    <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                        <Button x:Name="FriendsButton" Content=" Friends" Width="150" Height="35" Margin="0,0,0,0" Background="Gray" HorizontalContentAlignment="Left"/>
+                        <Button x:Name="WhiteboardsButton" Content=" My Whiteboards" Width="150" Height="35" Margin="0,0,0,0" Background="Gray" HorizontalContentAlignment="Left"/>
+                        <Button x:Name="SignOutButton" Content=" Sign Out" Height="35" Width="150" Margin="0,0,0,0" Tapped="SignOutButton_Tapped" Background="Gray" HorizontalContentAlignment="Left"/>
+                        <Button x:Name="ParticipantsButton" Content=" View Participants" Height="35" Width="150" Margin="0,15,0,0" Tapped="ParticipantsButton_Tapped" Background="Gray" HorizontalContentAlignment="Left"/>
+                        <ListBox x:Name="ParticipantsListBox" Visibility="Collapsed">
+                            <ListBoxItem Content="HELLO" />
+                        </ListBox>
+                        
                     </StackPanel>
                 </StackPanel>
             </SplitView.Pane>
-
 
             <Grid>
                 <InkCanvas x:Name="InkCanvas"/>
@@ -60,7 +64,7 @@
                             <ImageBrush ImageSource="Images/text.png"/>
                         </Button.Background>
                     </Button>
-                    <ToggleButton  x:Name="FingerDrawButton" Height="50" Width="50" Checked="FingerDrawButton_Checked" Unchecked="FingerDrawButton_Unchecked">
+                    <ToggleButton  x:Name="FingerDrawButton" Height="50" Width="50" Checked="FingerDrawButton_Checked" Unchecked="FingerDrawButton_Unchecked" >
                         <ToggleButton.Background>
                             <ImageBrush ImageSource="Images/finger.png" />
                         </ToggleButton.Background>
@@ -125,7 +129,13 @@
                     <TextBlock x:Name="ParticipantsTab" Visibility="Visible" Width="100" Height="50" VerticalAlignment="Bottom" Text="7 Participants" TextAlignment="Center" Margin="0,5,0,0"/>
                     <!--//when blick on the textblock or grid, collapse textblock and make listbox visible, and change grid margin and height to match listbox height-->
                     <ListBox x:Name="ParticipantsList" Visibility="Collapsed" Width="100" VerticalAlignment="Bottom">
-                        <ListBoxItem Content="HELLO"/>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                <TextBlock Width="100" Height="50" VerticalAlignment="Bottom" Text="{Binding ParticipantName}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                         <!--//bind listbox items-->
                     </ListBox>
                 </Grid>
