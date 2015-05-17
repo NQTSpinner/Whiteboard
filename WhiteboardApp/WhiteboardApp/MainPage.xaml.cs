@@ -18,6 +18,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using System.Net.Http;
+using System.IO;
+using System.Threading.Tasks;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -95,21 +98,23 @@ namespace WhiteboardApp
 
         private async void Load_Strokes(object sender, object e)
         {
-            var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
-            var openedFile = await file.AsTask();
-            if (openedFile != null)
+            string URL = "http://whiteboard01.blob.core.windows.net/test/test.isf";
+            HttpClient httpClient = new HttpClient();
+            Task<Stream> streamAsync = httpClient.GetStreamAsync(URL);
+            Stream result = streamAsync.Result;
+            Windows.Storage.Streams.IInputStream inStream = result.AsInputStream();
+            
+            using (inStream)
             {
-                using (var stream = await openedFile.OpenSequentialReadAsync())
+                try
                 {
-                    try
-                    {
-                        await InkCanvas.InkPresenter.StrokeContainer.LoadAsync(stream);
-                    }
-                    catch(Exception ex)
-                    {
-                        
-                    }
+                    await InkCanvas.InkPresenter.StrokeContainer.LoadAsync(inStream);
                 }
+                catch(Exception ex)
+                {
+
+                }
+                
             }
         }
 
