@@ -7,55 +7,33 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-
-
-        <ScrollViewer x:Name="ScrollGrid" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
+        <!--<ScrollViewer x:Name="ScrollGrid" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">-->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState x:Name="Narrow">
-                    <VisualState.Setters>
-                        <Setter Target="leftBG.Visibility" Value="Collapsed" />
-                        <Setter Target="rightBG.Visibility" Value="Collapsed" />
-                        <Setter Target="cornerBG.Visibility" Value="Visible" />
-                    </VisualState.Setters>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
-                    </VisualState.StateTriggers>
-                </VisualState>
+                <VisualStateGroup>
+                    <VisualState x:Name="Narrow">
+                        <VisualState.Setters>
+                            <Setter Target="leftBG.Visibility" Value="Collapsed" />
+                            <Setter Target="rightBG.Visibility" Value="Collapsed" />
+                            <Setter Target="cornerBG.Visibility" Value="Visible" />
+                        </VisualState.Setters>
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="0" />
+                        </VisualState.StateTriggers>
+                    </VisualState>
 
-                <VisualState x:Name="Normal">
-                    <VisualState.Setters>
-                        <Setter Target="leftBG.Visibility" Value="Visible" />
-                        <Setter Target="rightBG.Visibility" Value="Visible" />
-                        <Setter Target="cornerBG.Visibility" Value="Collapsed" />
-                    </VisualState.Setters>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
-                    </VisualState.StateTriggers>
-                </VisualState>
-
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Target="leftBG.Visibility" Value="Visible" />
+                            <Setter Target="rightBG.Visibility" Value="Visible" />
+                            <Setter Target="cornerBG.Visibility" Value="Collapsed" />
+                        </VisualState.Setters>
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="600" />
+                        </VisualState.StateTriggers>
+                    </VisualState>
                 </VisualStateGroup>
-                <!--<VisualStateGroup>
-                    <VisualState x:Name="Short">
-                        <VisualState.Setters>
-                            <Setter Target="ScrollGrid.VerticalScrollBarVisibility" Value="Visible" />
-                        </VisualState.Setters>
-                        <VisualState.StateTriggers>
-                            <AdaptiveTrigger MinWindowHeight="0" />
-                        </VisualState.StateTriggers>
-                    </VisualState>
-
-                    <VisualState x:Name="Tall">
-                        <VisualState.Setters>
-                            <Setter Target="ScrollGrid.VerticalScrollBarVisibility" Value="Disabled" />
-                        </VisualState.Setters>
-                        <VisualState.StateTriggers>
-                            <AdaptiveTrigger MinWindowHeight="600" />
-                        </VisualState.StateTriggers>
-                    </VisualState>
-                </VisualStateGroup>-->
-        </VisualStateManager.VisualStateGroups>
+            </VisualStateManager.VisualStateGroups>
         <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -83,5 +61,5 @@
             <TextBlock x:Name="LoginMessageBlock" Text=" " Foreground="Red" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
-        </ScrollViewer>
+        <!--</ScrollViewer>-->
 </Page>

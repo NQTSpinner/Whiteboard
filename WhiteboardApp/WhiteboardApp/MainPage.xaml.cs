@@ -19,7 +19,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using System.Net.Http;
-using System.IO;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
@@ -35,7 +34,11 @@ namespace WhiteboardApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        bool colourClicked = false;
+        bool sizeClicked = false;
         public static ObservableCollection<string> ParticipantsCollection = new ObservableCollection<string>();
+
+        public static MobileServiceClient ServiceClient;
 
         DispatcherTimer dispatchTimer;
 
@@ -60,6 +63,13 @@ namespace WhiteboardApp
             InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
 
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            InkCanvas.Height = this.Height;
+            InkCanvas.Width = this.Width;
+        }
+
         private async Task Upload_Strokes()
         {
             // Retrieve storage account from connection string.
@@ -75,14 +85,14 @@ namespace WhiteboardApp
             CloudBlockBlob blockBlob = container.GetBlockBlobReference("newfilehah");
 
             // Create or overwrite the "myblob" blob with contents from a local file.
-            try
-            {
+                try
+                {
                 await blockBlob.DeleteAsync();
-            }
+                    }
             catch
-            {
+                {
 
-            }
+                }
 
             var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
             var openedFile = await file.AsTask();
@@ -107,7 +117,7 @@ namespace WhiteboardApp
         private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
         {
             await Upload_Strokes();
-        }
+            }
 
         private async void Save_Strokes(InkPresenter sender, InkStrokesCollectedEventArgs args)
         {
@@ -201,6 +211,7 @@ namespace WhiteboardApp
 
         private void SetColourIcon(string path)
         {
+            colourClicked = false;
             var brush = new ImageBrush();
             brush.ImageSource = new BitmapImage(new Uri("ms-appx:/" + path));
             this.ColourButton.Background = brush;
@@ -208,6 +219,7 @@ namespace WhiteboardApp
 
         private void Thin_Stroke_Button_Click(object sender, RoutedEventArgs e)
         {
+            sizeClicked = false;
             CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Size = new Size(5, 5);
@@ -216,6 +228,7 @@ namespace WhiteboardApp
 
         private void Medium_Stroke_Button_Click(object sender, RoutedEventArgs e)
         {
+            sizeClicked = false;
             CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Size = new Size(10, 10);
@@ -224,6 +237,7 @@ namespace WhiteboardApp
 
         private void Thick_Stroke_Button_Click(object sender, RoutedEventArgs e)
         {
+            sizeClicked = false;
             CloseOtherPanels("");
             InkDrawingAttributes drawingAttributes = InkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttributes.Size = new Size(20, 20);
@@ -243,31 +257,36 @@ namespace WhiteboardApp
         private void OpenMenuButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             this.SplitView.IsPaneOpen = true;
+            this.ParticipantsListBox.Visibility = Visibility.Collapsed;
         }
 
-        private void OpenColourButton_Tapped(object sender, RoutedEventArgs e)
+        private void OpenColourButton_Click(object sender, RoutedEventArgs e)
         {
             CloseOtherPanels("Colour");
-            if (this.ColourPanel.Visibility.Equals(Visibility.Visible))
+            if (colourClicked)
             {
                 this.ColourPanel.Visibility = Visibility.Collapsed;
+                colourClicked = false;
             }
             else
             {
                 this.ColourPanel.Visibility = Visibility.Visible;
+                colourClicked = true;
             }
         }
 
         private void SizeButton_Click(object sender, RoutedEventArgs e)
         {
             CloseOtherPanels("Size");
-            if (this.SizePanel.Visibility.Equals(Visibility.Visible))
+            if (sizeClicked)
             {
                 this.SizePanel.Visibility = Visibility.Collapsed;
+                sizeClicked = false;
             }
             else
             {
                 this.SizePanel.Visibility = Visibility.Visible;
+                sizeClicked = true;
             }
         }
 
@@ -316,14 +335,56 @@ namespace WhiteboardApp
 
         private void ParticipantsButton_Tapped(object sender, RoutedEventArgs e)
         {
-            if (this.ParticipantsListBox.Visibility.Equals(Visibility.Visible))
+            if (ParticipantsListBox.Visibility.Equals(Visibility.Visible))
             {
-                this.ParticipantsListBox.Visibility = Visibility.Collapsed;
+                ParticipantsListBox.Visibility = Visibility.Collapsed;
             }
             else //http://www.softwareandfinance.com/VSNET_40/ListBoxBinding.html
             {
-                this.ParticipantsListBox.Visibility = Visibility.Visible;
+                ParticipantsListBox.Visibility = Visibility.Visible;
             }
         }
+
+        private void ColourButton_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            CloseOtherPanels("Colour");
+            this.ColourPanel.Visibility = Visibility.Visible;
+        }
+
+        private void ColourPanel_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            if (!colourClicked)
+            CloseOtherPanels("");
+        }
+
+        private void SizeButton_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            CloseOtherPanels("Size");
+            this.SizePanel.Visibility = Visibility.Visible;
+        }
+
+        private void SizePanel_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            if (!sizeClicked)
+            CloseOtherPanels("");
+        }
+
+        private async void PushNotificationButton_Click(object sender, RoutedEventArgs e)
+        {
+            IMobileServiceTable<Notifications> messageTable = ServiceClient.GetTable<Notifications>();
+            await messageTable.InsertAsync(new Notifications() { Text = "Notification button clicked" });
+        }
+            }
+
+    internal class Notifications
+    {
+        public Notifications()
+        {
+        }
+
+        public string Text { get; set; }
+        public string id { get; set; }
     }
+
+
 }
