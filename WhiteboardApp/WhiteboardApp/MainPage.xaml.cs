@@ -504,6 +504,34 @@ namespace WhiteboardApp
             }
         }
         #endregion
+        
+        private void InviteFriend_GotFocus(object sender, RoutedEventArgs e)
+        {
+            InviteFriend.Text = InviteFriend.Text == "User or Email" ? string.Empty : InviteFriend.Text;
+        }
+
+        private void InviteFriend_LostFocus(object sender, RoutedEventArgs e)
+        {
+            InviteFriend.Text = InviteFriend.Text == string.Empty ? "User or Email" : InviteFriend.Text;
+        }
+
+        private void FriendsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InviteFriendPanel.Visibility == Visibility.Visible)
+            {
+                InviteFriendPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                InviteFriendPanel.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            InviteFriend.Text = "User or Email";
+            InviteFriendPanel.Visibility = Visibility.Collapsed;
+        }
     }
 
     internal class Notifications
