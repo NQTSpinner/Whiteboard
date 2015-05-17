@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Collections.ObjectModel;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
 
@@ -23,6 +24,7 @@ namespace WhiteboardApp
     public static class UserVariables
     {
         public static int CurrentBoard = 1;
+
     }
     //class MobileServiceTable
     //{
