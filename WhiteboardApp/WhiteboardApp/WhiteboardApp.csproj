@@ -134,6 +134,7 @@
     <Content Include="Images\rightbg.png" />
     <Content Include="Images\scrumboard.png" />
     <Content Include="Images\scrumboardbanner.png" />
+    <Content Include="Images\sendmsg.png" />
     <Content Include="Images\smallbrush.png" />
     <Content Include="Images\square.png" />
     <Content Include="Images\text.png" />

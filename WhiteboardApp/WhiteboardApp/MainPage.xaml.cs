@@ -26,30 +26,41 @@ using Microsoft.WindowsAzure.MobileServices;
 
 namespace WhiteboardApp
 {
+    public class ChatMessage
+    {
+        public string Message { get; set; }
+        public string User { get; set; }
+    }
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        bool isDouble = false;
+        string myuser = "Carmen";
         bool colourClicked = false;
         bool sizeClicked = false;
         public static ObservableCollection<string> ParticipantsCollection = new ObservableCollection<string>();
-
+        public static ObservableCollection<ChatMessage> ChatCollection = new ObservableCollection<ChatMessage>();
         public static MobileServiceClient ServiceClient;
 
         DispatcherTimer dispatchTimer;
 
         //public event PropertyChangedEventHandler PropertyChanged;
-        
+
 
         public MainPage()
         {
+            ChatCollection = new ObservableCollection<ChatMessage>();
+            ChatCollection.Add(new ChatMessage { Message = "hey!", User = "Carmen"});
+            ChatCollection.Add(new ChatMessage { Message = "what's up", User = "Thai" });
+            ChatCollection.Add(new ChatMessage { Message = "yoo", User = "Adrian" });
             ParticipantsCollection = new ObservableCollection<string>();
-            ParticipantsCollection.Add(" Ann");
-            ParticipantsCollection.Add(" Marie");
-            ParticipantsCollection.Add(" Rem");
+            ParticipantsCollection.Add(" Carmen");
+            ParticipantsCollection.Add(" Thai");
+            ParticipantsCollection.Add(" Adrian");
             this.InitializeComponent();
-
+            this.ChatListBox.ItemsSource = ChatCollection;
             this.ParticipantsListBox.ItemsSource = ParticipantsCollection;
             //dispatchTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             //dispatchTimer.Tick += Update_Canvas;
@@ -354,6 +365,43 @@ namespace WhiteboardApp
         {
             IMobileServiceTable<Notifications> messageTable = ServiceClient.GetTable<Notifications>();
             await messageTable.InsertAsync(new Notifications() { Text = "Notification button clicked" });
+        }
+
+        private void ChatTab_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.HiddenChatPanel.Visibility == Visibility.Visible)
+            {
+                this.HiddenChatPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.HiddenChatPanel.Visibility = Visibility.Visible;
+                ChatTextBox.Focus(FocusState.Pointer);
+            }
+        }
+
+        private void SendMessageButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChatCollection.Add(new ChatMessage { User = myuser, Message = ChatTextBox.Text });
+            ChatListBox.ItemsSource = ChatCollection;
+            ChatTextBox.Text = "";
+            ChatTextBox.Focus(FocusState.Pointer);
+        }
+
+        private void ChatTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter && !isDouble)
+            {
+                ChatCollection.Add(new ChatMessage { User = myuser, Message = ChatTextBox.Text });
+                ChatListBox.ItemsSource = ChatCollection;
+                ChatTextBox.Text = "";
+                isDouble = true;
+                ChatTextBox.Focus(FocusState.Pointer);
+            }
+            else
+            {
+                isDouble = false;
+            }
         }
     }
 

@@ -135,24 +135,34 @@
                     </Button>
                 </StackPanel>
 
-                <!--<Grid x:Name="ParticipantsGrid" Margin="1050,7500,0,0" Height="50" Width="100" Background="Gray">
-                    <TextBlock x:Name="ParticipantsTab" Visibility="Visible" Width="100" Height="50" VerticalAlignment="Bottom" Text="7 Participants" TextAlignment="Center" Margin="0,5,0,0"/>
-                    -->
+                <StackPanel x:Name="ChatGrid" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Background="Gray">
+                    <Button x:Name="ChatTab" Click="ChatTab_Click" Width="150" Height="40" VerticalAlignment="Bottom" Content="3 Participants"/>
+                    
                 <!--//when blick on the textblock or grid, collapse textblock and make listbox visible, and change grid margin and height to match listbox height-->
-                <!--
-                    <ListBox x:Name="ParticipantsList" Visibility="Collapsed" Width="100" VerticalAlignment="Bottom">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                <TextBlock Width="100" Height="50" VerticalAlignment="Bottom" Text="{Binding ParticipantName}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                        -->
-                <!--//bind listbox items-->
-                <!--
-                    </ListBox>
-                </Grid>-->
+                    <StackPanel x:Name="HiddenChatPanel" Visibility="Collapsed">
+                        <ScrollViewer x:Name="ChatScrollViewer" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled">
+                        <ListBox x:Name="ChatListBox" Width="150" Height="500" VerticalAlignment="Bottom" ItemsSource="{Binding}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,-2,0,-2">
+                                        <TextBlock Width="100" FontSize="10" HorizontalAlignment="Left"  FontWeight="Bold" Text="{Binding User}"/>
+                                        <TextBlock Width="100" FontSize="15" HorizontalAlignment="Left" Text="{Binding Message}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <!--//bind listbox items-->
+                        </ListBox>
+                        </ScrollViewer>
+                        <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="ChatTextBox" Width="120" Height="30" KeyUp="ChatTextBox_KeyUp" />
+                            <Button x:Name="SendMessageButton" Height="32" Width="32" Click="SendMessageButton_Click">
+                                    <Button.Background>
+                                <ImageBrush ImageSource="Images/sendmsg.png"/>
+                                </Button.Background>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
 
             </Grid>
         </SplitView>

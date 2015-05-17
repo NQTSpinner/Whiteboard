@@ -51,11 +51,17 @@ namespace WhiteboardApp
             }
             else if (String.Compare(a, "\"User Doesnt Exist\"") == 0)
             {
-                URL = "http://107.170.241.204/api/createaccount?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
+                URL = "http://107.170.241.204/api/createAccount?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
                 HttpClient clientB = new HttpClient();
                 string b = await client.GetStringAsync(URL);
-                b = b.Substring(18, a.Length - 18 - 1);
-                LoginMessageBlock.Text = "User account created, please sign in.";
+                b = b.Substring(14, b.Length - 14 - 1);
+                if (String.Compare(b, "true") == 0) { 
+                    LoginMessageBlock.Text = "User account created, please sign in.";
+                }
+                else
+                {
+                    LoginMessageBlock.Text = "Unable to create new account.";
+                }
             }
             else {
                 LoginMessageBlock.Text = "Incorrect password";
