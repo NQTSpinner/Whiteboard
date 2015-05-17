@@ -244,5 +244,13 @@ namespace WhiteboardApp
         {
 
         }
+
+        private void SignOutButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (this.Frame != null)
+            {
+                this.Frame.Navigate(typeof(LoginPage));
+            }
+        }
     }
 }

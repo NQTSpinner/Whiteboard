@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="WhiteboardApp.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WhiteboardApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Orientation="Vertical" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image x:Name="WhiteboardAppLogo" Height="150" Width="150" Source="Images/user.png"/>
+            <TextBlock Text="Sign In" HorizontalAlignment="Center" FontSize="30" Margin="0,10,0,0"/>
+            <TextBlock Text="or Create an Account" HorizontalAlignment="Center" FontSize="15" Margin="0,0,0,5"/>
+            <TextBox Text="Username or email" Height="30" TextAlignment="Left" Margin="0,7,0,7"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="Password" Height="30" TextAlignment="Left" Width="165" Margin="0,5,0,15" />
+                <Button x:Name="SubmitButton" Height="27" Width="27" Margin="5,-7,0,0" BorderBrush="Black" BorderThickness="1" Click="SubmitButton_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Images/nextbutton.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+            <TextBlock x:Name="LoginMessageBlock" Text="Tells if username or pw is okay" Foreground="Red"/>
+        </StackPanel>
+    </Grid>
+</Page>
