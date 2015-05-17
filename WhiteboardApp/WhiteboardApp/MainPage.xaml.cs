@@ -19,8 +19,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using System.Net.Http;
-using System.IO;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.MobileServices;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -34,6 +34,8 @@ namespace WhiteboardApp
         bool colourClicked = false;
         bool sizeClicked = false;
         public static ObservableCollection<string> ParticipantsCollection = new ObservableCollection<string>();
+
+        public static MobileServiceClient ServiceClient;
 
         DispatcherTimer dispatchTimer;
 
@@ -314,13 +316,13 @@ namespace WhiteboardApp
 
         private void ParticipantsButton_Tapped(object sender, RoutedEventArgs e)
         {
-            if (this.ParticipantsListBox.Visibility.Equals(Visibility.Visible))
+            if (ParticipantsListBox.Visibility.Equals(Visibility.Visible))
             {
-                this.ParticipantsListBox.Visibility = Visibility.Collapsed;
+                ParticipantsListBox.Visibility = Visibility.Collapsed;
             }
             else //http://www.softwareandfinance.com/VSNET_40/ListBoxBinding.html
             {
-                this.ParticipantsListBox.Visibility = Visibility.Visible;
+                ParticipantsListBox.Visibility = Visibility.Visible;
             }
         }
 
@@ -348,5 +350,22 @@ namespace WhiteboardApp
             CloseOtherPanels("");
         }
 
+        private async void PushNotificationButton_Click(object sender, RoutedEventArgs e)
+        {
+            IMobileServiceTable<Notifications> messageTable = ServiceClient.GetTable<Notifications>();
+            await messageTable.InsertAsync(new Notifications() { Text = "Notification button clicked" });
+        }
     }
+
+    internal class Notifications
+    {
+        public Notifications()
+        {
+        }
+
+        public string Text { get; set; }
+        public string id { get; set; }
+    }
+
+
 }

@@ -61,7 +61,7 @@ namespace WhiteboardApp
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            MainPage.MobileServiceClient = WhiteboardCloudClient;
+            MainPage.ServiceClient = WhiteboardCloudClient;
         }
 
         /// <summary>
