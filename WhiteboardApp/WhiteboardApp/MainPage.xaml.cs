@@ -80,7 +80,7 @@ namespace WhiteboardApp
             dispatchTimer.Tick += Load_Strokes;
             dispatchTimer.Start();
 
-            InkUpdateTimer.Interval = new TimeSpan(0, 0, 2);
+            InkUpdateTimer.Interval = new TimeSpan(0, 0, 1);
             InkUpdateTimer.Tick += Update_Strokes;
 
             //ParticipantsCollection.CollectionChanged += new PropertyChangedEventHandler(RaisePropertyChanged);
@@ -151,7 +151,7 @@ namespace WhiteboardApp
                 {
                     try
                     {
-                        await InkCanvas.InkPresenter.StrokeContainer.LoadAsync(inStream);
+                        InkCanvas.InkPresenter.StrokeContainer.LoadAsync(inStream);
                     }
                     catch (Exception ex)
                     {
@@ -497,7 +497,7 @@ namespace WhiteboardApp
                 {
                     throw ex;
                 }
-                await blockBlob.UploadFromFileAsync(openedFile);
+                blockBlob.UploadFromFileAsync(openedFile);
             }
         }
         #endregion
