@@ -112,19 +112,23 @@
     <None Include="WhiteboardApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\background.png" />
     <Content Include="Images\black.png" />
     <Content Include="Images\blue.png" />
     <Content Include="Images\brush.png" />
     <Content Include="Images\circle.png" />
+    <Content Include="Images\corner.png" />
     <Content Include="Images\eraser.png" />
     <Content Include="Images\finger.png" />
     <Content Include="Images\green.png" />
     <Content Include="Images\largebrush.png" />
+    <Content Include="Images\leftbg.png" />
     <Content Include="Images\medbrush.png" />
     <Content Include="Images\nextbutton.png" />
     <Content Include="Images\orange.png" />
     <Content Include="Images\purple.png" />
     <Content Include="Images\red.png" />
+    <Content Include="Images\rightbg.png" />
     <Content Include="Images\scrumboard.png" />
     <Content Include="Images\scrumboardbanner.png" />
     <Content Include="Images\smallbrush.png" />
