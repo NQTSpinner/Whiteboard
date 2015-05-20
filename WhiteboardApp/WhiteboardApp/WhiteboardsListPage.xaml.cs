@@ -73,5 +73,13 @@ namespace WhiteboardApp
                 this.Frame.Navigate(typeof(MainPage));
             }
         }
+
+        private void SignOutButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Frame != null)
+            {
+                this.Frame.Navigate(typeof(LoginPage));
+            }
+        }
     }
 }

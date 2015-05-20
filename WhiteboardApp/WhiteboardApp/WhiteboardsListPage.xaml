@@ -13,13 +13,15 @@
         <!--<TextBlock Text="My ScrumBoards" Foreground="RoyalBlue" FontSize="40" Margin="0,20,0,20" HorizontalAlignment="Center"/>-->
         <Image Source="Images/scrumboardtitle.png" Height="120"/>
             <Button x:Name="CreateWhiteboardButton" Margin="0,40,0,0" Foreground="BlueViolet" Width="400" Height="50" Content="+ Create New ScrumBoard" HorizontalAlignment="Center" FontSize="20" Background="LavenderBlush" Click="CreateWhiteboardButton_Click"></Button>
-            <ListBox x:Name="WhiteboardsListBox" HorizontalAlignment="Center" Width="400" Margin="0,30,0,0" ItemsSource="{Binding}" Background="LemonChiffon" SelectionChanged="WhiteboardsListBox_SelectionChanged">
+            <ListBox x:Name="WhiteboardsListBox" HorizontalAlignment="Center" Width="400" Margin="0,30,0,100" ItemsSource="{Binding}" Background="LemonChiffon" SelectionChanged="WhiteboardsListBox_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                         <TextBlock Foreground="BlueViolet" Text="{Binding}" Margin="10,10,50,0" TextAlignment="Center"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+            
         </StackPanel>
+        <Button x:Name="SignOutButton" Content="Sign Out" VerticalAlignment="Bottom" Margin="0,0,0,50" HorizontalAlignment="Center" Background="Lavender" Click="SignOutButton_Click"/>
     </Grid>
 </Page>
