@@ -31,7 +31,7 @@ namespace WhiteboardApp
         string result;
         public async void getBoardList()
         {
-            string URL = "http://107.170.241.204/api/getUserBoards/?user=" + UserVariables.UserName;
+            string URL = "http://104.236.134.122/api/getUserBoards/?user=" + UserVariables.UserName;
             HttpClient client = new HttpClient();
             string a = await client.GetStringAsync(URL);
             Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(a);
