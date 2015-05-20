@@ -30,7 +30,7 @@ namespace WhiteboardApp
         bool isDouble = false;
         string password;
         string defaultText = "Username or email";
-        private string URL = "107.170.241.204/api/authenticate?user=[username]&pass=[pass]";
+        private string URL = "104.236.134.122/api/authenticate?user=[username]&pass=[pass]";
         public LoginPage()
         {
             this.InitializeComponent();
@@ -39,7 +39,7 @@ namespace WhiteboardApp
 
         private async void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            URL = "http://107.170.241.204/api/authenticate?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
+            URL = "http://104.236.134.122/api/authenticate?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
             HttpClient client = new HttpClient();
             string a = await client.GetStringAsync(URL);
             a = a.Substring(18, a.Length - 18 - 1);
@@ -53,7 +53,7 @@ namespace WhiteboardApp
             }
             else if (String.Compare(a, "\"User Doesnt Exist\"") == 0)
             {
-                URL = "http://107.170.241.204/api/createAccount?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
+                URL = "104.236.134.122/api/createAccount?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
                 HttpClient clientB = new HttpClient();
                 string b = await client.GetStringAsync(URL);
                 b = b.Substring(14, b.Length - 14 - 1);
@@ -110,7 +110,7 @@ namespace WhiteboardApp
         {
             if (e.Key == Windows.System.VirtualKey.Enter && !isDouble)
             {
-                URL = "http://107.170.241.204/api/authenticate?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
+                URL = "http://104.236.134.122/api/authenticate?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
                 HttpClient client = new HttpClient();
                 string a = await client.GetStringAsync(URL);
                 a = a.Substring(18, a.Length - 18 - 1);
@@ -124,7 +124,7 @@ namespace WhiteboardApp
                 }
                 else if (String.Compare(a, "\"User Doesnt Exist\"") == 0)
                 {
-                    URL = "http://107.170.241.204/api/createAccount?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
+                    URL = "http://104.236.134.122/api/createAccount?user=" + UsernameBox.Text + "&pass=" + PasswordBoxHidden.Password;
                     HttpClient clientB = new HttpClient();
                     string b = await client.GetStringAsync(URL);
                     b = b.Substring(14, b.Length - 14 - 1);
