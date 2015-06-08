@@ -30,6 +30,7 @@ namespace WhiteboardApp
         public MainPage()
         {
             this.InitializeComponent();
+
             //dispatchTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             //dispatchTimer.Tick += Update_Canvas;
             //dispatchTimer.Start();
@@ -41,6 +42,7 @@ namespace WhiteboardApp
 
         private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
         {
+            HttpServerInterface http = new HttpServerInterface();
             var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
             var openedFile = await file.AsTask();
             if (openedFile != null)
@@ -49,7 +51,7 @@ namespace WhiteboardApp
                 {
                     using (IRandomAccessStream stream = await openedFile.OpenAsync(FileAccessMode.ReadWrite))
                     {
-                        await InkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
+                        //await InkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
                     }
                 }
                 catch (Exception ex)
@@ -57,10 +59,12 @@ namespace WhiteboardApp
 
                 }
             }
+            http.PostInkFile(openedFile);
         }
 
         private async void Save_Strokes(InkPresenter sender, InkStrokesCollectedEventArgs args)
         {
+            HttpServerInterface http = new HttpServerInterface();
             var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
             var openedFile = await file.AsTask();
             if (openedFile != null)
@@ -77,12 +81,13 @@ namespace WhiteboardApp
 
                 }
             }
+            http.PostInkFile(openedFile);
         }
 
         private async void Load_Strokes(object sender, object e)
         {
-            var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
-            var openedFile = await file.AsTask();
+            HttpServerInterface http = new HttpServerInterface();
+            var openedFile = await http.GetInkFile();
             if (openedFile != null)
             {
                 using (var stream = await openedFile.OpenSequentialReadAsync())
@@ -237,7 +242,7 @@ namespace WhiteboardApp
 
         private void CircleButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Load_Strokes(sender, e);
         }
 
         private void TextButton_Click(object sender, RoutedEventArgs e)
