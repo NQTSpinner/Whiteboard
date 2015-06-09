@@ -27,10 +27,12 @@ namespace WhiteboardApp
     public sealed partial class MainPage : Page
     {
         DispatcherTimer dispatchTimer;
+        SocketServerInterface serverClient;
         public MainPage()
         {
             this.InitializeComponent();
 
+            serverClient = new SocketServerInterface();
             //dispatchTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             //dispatchTimer.Tick += Update_Canvas;
             //dispatchTimer.Start();
@@ -40,6 +42,7 @@ namespace WhiteboardApp
             InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
 
+        //Using as test function, clean up later
         private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
         {
             HttpServerInterface http = new HttpServerInterface();
@@ -59,7 +62,7 @@ namespace WhiteboardApp
 
                 }
             }
-            http.PostInkFile(openedFile);
+            //http.PostInkFile(openedFile);
         }
 
         private async void Save_Strokes(InkPresenter sender, InkStrokesCollectedEventArgs args)
@@ -81,7 +84,7 @@ namespace WhiteboardApp
 
                 }
             }
-            http.PostInkFile(openedFile);
+            serverClient.SendMessage("NewFile", openedFile);
         }
 
         private async void Load_Strokes(object sender, object e)
