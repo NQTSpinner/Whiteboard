@@ -45,7 +45,6 @@ namespace WhiteboardApp
             InkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Pen;
         }
 
-        //Using as test function, clean up later
         private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
         {
             HttpServerInterface http = new HttpServerInterface();
@@ -57,7 +56,7 @@ namespace WhiteboardApp
                 {
                     using (IRandomAccessStream stream = await openedFile.OpenAsync(FileAccessMode.ReadWrite))
                     {
-                        //await InkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
+                        await InkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
                     }
                 }
                 catch (Exception ex)
@@ -65,7 +64,7 @@ namespace WhiteboardApp
 
                 }
             }
-            //http.PostInkFile(openedFile);
+            http.PostInkFile(openedFile);
         }
 
         private async void Save_Strokes(InkPresenter sender, InkStrokesCollectedEventArgs args)
