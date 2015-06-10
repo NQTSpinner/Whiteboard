@@ -9,6 +9,8 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.Web;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 
 namespace WhiteboardApp
 {
@@ -17,10 +19,16 @@ namespace WhiteboardApp
         private readonly string SocketUrl = "ws://104.236.134.122:9090/ws";
         private MessageWebSocket messageWebSocket;
         private DataWriter messageWriter;
+        public ReloadInk reloadink;
 
         public SocketServerInterface()
         {
             Connect();
+        }
+
+        public void SetReloadInkDel(ReloadInk reloaddel)
+        {
+            reloadink = reloaddel;
         }
 
         public async void SendMessage(string message, StorageFile file)
@@ -76,6 +84,11 @@ namespace WhiteboardApp
             {
                 WebErrorStatus status = WebSocketError.GetStatus(ex.GetBaseException().HResult);
             }
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                () =>
+                {
+                    reloadink();
+                });
         }
 
         private void Closed(IWebSocket sender, WebSocketClosedEventArgs args)

@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace WhiteboardApp
 {
+    public delegate void ReloadInk();
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
@@ -33,6 +34,8 @@ namespace WhiteboardApp
             this.InitializeComponent();
 
             serverClient = new SocketServerInterface();
+            ReloadInk reloaddel = new ReloadInk(Reload_Strokes);
+            serverClient.SetReloadInkDel(reloaddel);
             //dispatchTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             //dispatchTimer.Tick += Update_Canvas;
             //dispatchTimer.Start();
@@ -102,6 +105,26 @@ namespace WhiteboardApp
                     catch(Exception ex)
                     {
                         
+                    }
+                }
+            }
+        }
+
+        private async void Reload_Strokes()
+        {
+            var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
+            var openedFile = await file.AsTask();
+            if (openedFile != null)
+            {
+                using (var stream = await openedFile.OpenSequentialReadAsync())
+                {
+                    try
+                    {
+                        await InkCanvas.InkPresenter.StrokeContainer.LoadAsync(stream);
+                    }
+                    catch (Exception ex)
+                    {
+
                     }
                 }
             }
