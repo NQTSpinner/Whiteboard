@@ -25,11 +25,11 @@ namespace WhiteboardApp
 
         public async void SendMessage(string message, StorageFile file)
         {
-            messageWriter.WriteString(message);
-            await messageWriter.StoreAsync();
-
             HttpServerInterface http = new HttpServerInterface();
             http.PostInkFile(file);
+
+            messageWriter.WriteString(message);
+            await messageWriter.StoreAsync();
         }
 
         private async void Connect()
