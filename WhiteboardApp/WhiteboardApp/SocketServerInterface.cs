@@ -20,10 +20,12 @@ namespace WhiteboardApp
         private MessageWebSocket messageWebSocket;
         private DataWriter messageWriter;
         public ReloadInk reloadink;
+        private HttpServerInterface http;
 
         public SocketServerInterface()
         {
             Connect();
+            http = new HttpServerInterface();
         }
 
         public void SetReloadInkDel(ReloadInk reloaddel)
@@ -33,8 +35,7 @@ namespace WhiteboardApp
 
         public async void SendMessage(string message, StorageFile file)
         {
-            HttpServerInterface http = new HttpServerInterface();
-            http.PostInkFile(file);
+            await http.PostInkFile(file);
 
             messageWriter.WriteString(message);
             await messageWriter.StoreAsync();
@@ -93,11 +94,6 @@ namespace WhiteboardApp
 
         private void Closed(IWebSocket sender, WebSocketClosedEventArgs args)
         {
-            // You can add code to log or display the code and reason
-            // for the closure (stored in args.Code and args.Reason)
-
-            // This is invoked on another thread so use Interlocked 
-            // to avoid races with the Start/Close/Reset methods.
             MessageWebSocket webSocket = Interlocked.Exchange(ref messageWebSocket, null);
             if (webSocket != null)
             {

@@ -47,7 +47,6 @@ namespace WhiteboardApp
 
         private async void Erase_Strokes(InkPresenter sender, InkStrokesErasedEventArgs args)
         {
-            HttpServerInterface http = new HttpServerInterface();
             var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
             var openedFile = await file.AsTask();
             if (openedFile != null)
@@ -64,12 +63,11 @@ namespace WhiteboardApp
 
                 }
             }
-            http.PostInkFile(openedFile);
+            serverClient.SendMessage("EraseStroke", openedFile);
         }
 
         private async void Save_Strokes(InkPresenter sender, InkStrokesCollectedEventArgs args)
         {
-            HttpServerInterface http = new HttpServerInterface();
             var file = ApplicationData.Current.RoamingFolder.CreateFileAsync("ink.isf", CreationCollisionOption.OpenIfExists);
             var openedFile = await file.AsTask();
             if (openedFile != null)

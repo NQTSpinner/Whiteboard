@@ -13,7 +13,7 @@ namespace WhiteboardApp
     {
         readonly string rootUrl = "http://104.236.134.122:8888/";
 
-        public async void PostInkFile(StorageFile file)
+        public async Task PostInkFile(StorageFile file)
         {
             Byte[] content = await ReadFile(file);
             HttpClient httpClient = new HttpClient();
